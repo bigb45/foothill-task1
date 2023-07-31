@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="68dp"
-        android:text="Welcome to Pandora,\nCreate a new account"
+        android:layout_marginEnd="20dp"
+        android:text="@string/welcome_to_pandora_create_a_new_account"
         android:textColor="#222222"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -24,7 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Sign in."
+        android:text="@string/sign_in"
         android:textColor="#222222"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/textView"
@@ -35,95 +37,24 @@
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Email"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextEmailAddress" />
-
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:paddingStart="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextName"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:paddingStart="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signinText"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:paddingStart="10dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <EditText
-        android:id="@+id/editTextTextPassword2"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/edit_text_border"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:paddingStart="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:text="@string/email"
+        app:layout_constraintBottom_toTopOf="@+id/emailContainer"
+        app:layout_constraintStart_toStartOf="@+id/emailContainer" />
 
     <TextView
         android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Password"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword" />
+        android:text="@string/password"
+        app:layout_constraintBottom_toTopOf="@+id/signupPasswordContainer"
+        app:layout_constraintStart_toStartOf="@+id/signupPasswordContainer" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Already have an account?"
+        android:text="@string/already_have_an_account"
         android:textColor="#222222"
         app:layout_constraintEnd_toStartOf="@+id/signinText"
         app:layout_constraintHorizontal_bias="0.0"
@@ -136,20 +67,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:background="@drawable/signin_button"
-        android:text="Sign in"
+        android:text="@string/sign_in"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2" />
+        app:layout_constraintEnd_toEndOf="@+id/confirmPasswordContainer"
+        app:layout_constraintStart_toStartOf="@+id/confirmPasswordContainer"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordContainer" />
 
     <Button
         android:id="@+id/signinButtonGoogle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Sign in with google"
+        android:background="@drawable/google_signin_button"
+        android:text="@string/sign_in_google"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@+id/signinButton"
         app:layout_constraintStart_toStartOf="@+id/signinButton"
@@ -159,18 +90,105 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Name"
-        app:layout_constraintBottom_toTopOf="@+id/editTextName"
-        app:layout_constraintStart_toStartOf="@+id/editTextName" />
+        android:text="@string/name"
+        app:layout_constraintBottom_toTopOf="@+id/nameContainer"
+        app:layout_constraintStart_toStartOf="@+id/nameContainer" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Confirm password"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword2"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword2" />
+        android:text="@string/confirm_password"
+        app:layout_constraintBottom_toTopOf="@+id/confirmPasswordContainer"
+        app:layout_constraintStart_toStartOf="@+id/confirmPasswordContainer" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signinText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/edit_text_border" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="20dp"
+        app:helperTextTextColor="@color/warning"
+        app:helperText=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameContainer">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/edit_text_border" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/signupPasswordContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:helperText=""
+        app:helperTextTextColor="@color/warning"
+        app:layout_constraintEnd_toEndOf="@+id/emailContainer"
+        app:layout_constraintStart_toStartOf="@+id/emailContainer"
+        app:layout_constraintTop_toBottomOf="@+id/emailContainer"
+        app:counterEnabled="true"
+        app:counterMaxLength="12"
+        >
+<!--        TODO: make password fields invisible, add character counter-->
+        <com.google.android.material.textfield.TextInputEditText
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:inputType="textPassword"
+            android:background="@drawable/edit_text_border"
+             />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/confirmPasswordContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+
+        app:layout_constraintEnd_toEndOf="@+id/signupPasswordContainer"
+        app:layout_constraintStart_toStartOf="@+id/signupPasswordContainer"
+        app:layout_constraintTop_toBottomOf="@+id/signupPasswordContainer"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:inputType="textPassword"            android:id="@+id/confirmPasswordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+
+            android:background="@drawable/edit_text_border" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Login task #1</string>
     <string name="required">Required</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="password">Password</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="reset_password">Reset password</string>
+    <string name="welcome_to_pandora_sign_in_to_continue">Welcome to Pandora,\nSign in to continue</string>
+    <string name="welcome_to_pandora_create_a_new_account">Welcome to Pandora,\nCreate a new account </string>
+    <string name="email">Email</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="name">Name</string>
+    <string name="confirm_password">Confirm password</string>
 </resources>

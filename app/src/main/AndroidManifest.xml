@@ -29,6 +29,11 @@
             android:name=".SignupActivity"
             android:exported="true"
             />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            />
+
     </application>
 
 
