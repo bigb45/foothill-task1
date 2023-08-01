@@ -18,18 +18,10 @@ class SigninActivity : AppCompatActivity() {
         binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val createAccountText = findViewById<TextView>(R.id.signinText)
-//        val emailAddressEditText = findViewById<EditText>(R.id.emailEditText)
-//        val passwordEditText = findViewById<EditText>(R.id.passwordEditText)
-//        val signinButton = findViewById<TextView>(R.id.signinButton)
-//        val signinButtonGoogle = findViewById<TextView>(R.id.signinButtonGoogle)
-
-        /* use binding, much cleaner */
         val createAccountText = binding.signinText
         val emailAddressEditText = binding.emailEditText
         val passwordEditText = binding.passwordEditText
         val signinButton = binding.signinButton
-//        val signinButtonGoogle = binding.signinButtonGoogle
         val emailContainer = binding.emailContainer
         val passwordContainer = binding.passwordContainer
 
@@ -50,14 +42,11 @@ class SigninActivity : AppCompatActivity() {
                 startActivity(mainPageIntent)
             }
         }
-//        Log.d("regex matched", regex.containsMatchIn("bgd4500@gmail.com").toString())
         createAccountText.setOnClickListener {
             Log.d("Debug", "creating new account")
             val signupIntent = Intent(this, SignupActivity::class.java)
             startActivity(signupIntent)
         }
-
-
 
     }
 
@@ -87,4 +76,3 @@ class SigninActivity : AppCompatActivity() {
     }
 }
 
-//TODO: add activity to represent login success,

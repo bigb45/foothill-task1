@@ -26,7 +26,6 @@ class SignupActivity: AppCompatActivity() {
         val confirmPasswordEditText = binding.confirmPasswordEditText
 
 
-
         signinText.setOnClickListener {
             Log.d("Debug", "signing in with existing account")
             val signinIntent = Intent(this, SigninActivity::class.java)
