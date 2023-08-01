@@ -2,6 +2,8 @@ package com.example.logintask1
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +21,8 @@ class SignupActivity: AppCompatActivity() {
         val signupButton = binding.signinButton
         val signupButtonGoogle = binding.signinButtonGoogle
 
-        val emailContainer = binding.emailContainer
+
         val passwordContainer = binding.signupPasswordContainer
-        val emailAddressEditText = binding.emailEditText
         val passwordEditText = binding.passwordEditText
         val confirmPasswordEditText = binding.confirmPasswordEditText
 
@@ -31,14 +32,11 @@ class SignupActivity: AppCompatActivity() {
             val signinIntent = Intent(this, SigninActivity::class.java)
             startActivity(signinIntent)
         }
-
+        emailChangeListener()
+        passwordChangeListener()
         signupButton.setOnClickListener {
-            val emailAddress = emailAddressEditText.text.toString()
-            val password = passwordEditText.text.toString()
-            val confirmPassword = confirmPasswordEditText.text.toString()
-            Log.d("validating", "validating email address $emailAddress")
-            val isEmailValid = validateEmail(emailAddress, emailContainer)
-            val isPasswordValid = validatePassword(password, confirmPassword, passwordContainer)
+            val isEmailValid = binding.emailContainer.helperText == null
+            val isPasswordValid = binding.signupPasswordContainer.helperText == null
             if(isEmailValid && isPasswordValid){
                 val mainPageIntent = Intent(this, MainActivity::class.java)
                 startActivity(mainPageIntent)
@@ -47,37 +45,84 @@ class SignupActivity: AppCompatActivity() {
 
     }
 
-    private fun validateEmail(email: String, emailContainer: TextInputLayout): Boolean{
+    private fun emailChangeListener(){
+        val container = binding.emailContainer
+
+        binding.emailEditText.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // do nothing
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // do nothing
+            }
+
+            override fun afterTextChanged(newText: Editable?) {
+                container.helperText = validateEmail()
+            }
+        })
+
+    }
+
+    private fun passwordChangeListener(){
+
+        val container = binding.signupPasswordContainer
+        binding.passwordEditText.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // do nothing
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // do nothing
+            }
+
+            override fun afterTextChanged(newText: Editable?) {
+                container.helperText = validatePassword()
+            }
+        })
+
+        binding.confirmPasswordEditText.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // do nothing
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // do nothing
+            }
+
+            override fun afterTextChanged(newText: Editable?) {
+                container.helperText = validatePassword()
+            }
+        })
+
+
+    }
+
+
+    private fun validateEmail(): String?{
+        val email = binding.emailEditText.text.toString()
         val emailRegex = Regex(".+@.+[.com]$")
         if(!emailRegex.matches(email)){
             Log.d("email", "$email does not match the pattern!")
-            emailContainer.helperText = "please enter a correct email"
-            return false
-        }else{
-            emailContainer.helperText = ""
-
+            return "please enter a correct email"
         }
-        return true
+        return null
     }
 
-    private fun validatePassword(password: String, confirmPassword: String, passwordContainer: TextInputLayout): Boolean{
+    private fun validatePassword(): String?{
+        val confirmPassword = binding.confirmPasswordEditText.text.toString()
+        val password = binding.passwordEditText.text.toString()
+
         if(password.length < 8){
-
-            Log.d("password", "password length is less than 8 characters")
-            passwordContainer.helperText = "password must have 8 or more characters"
-            return false
-        }else{
-            passwordContainer.helperText = ""
-
+            return "password must have 8 or more characters"
         }
+
         if(password != confirmPassword){
-            Log.d("password", "passwords don't match")
-            passwordContainer.helperText = "passwords don't match"
-            return false
-        }else{
-            passwordContainer.helperText = ""
+            Log.d("$password", "$confirmPassword")
+            return "passwords don't match"
+
         }
-        return true
+        return null
     }
 
 }

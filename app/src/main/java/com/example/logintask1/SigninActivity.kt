@@ -9,7 +9,6 @@ import android.text.TextWatcher
 import android.text.style.UnderlineSpan
 import android.util.Log
 import com.example.logintask1.databinding.ActivitySigninBinding
-import com.google.android.material.textfield.TextInputLayout
 
 
 class SigninActivity : AppCompatActivity() {
@@ -28,8 +27,8 @@ class SigninActivity : AppCompatActivity() {
         val spannable = SpannableString(text)
         spannable.setSpan(UnderlineSpan(), 0, text.length, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
         createAccountText.text = spannable
-        emailFocusListener()
-        passwordFocusListener()
+        emailChangeListener()
+        passwordChangeListener()
 
         signinButton.setOnClickListener {
             val isPasswordValid = (binding.emailContainer.helperText == null)
@@ -47,7 +46,7 @@ class SigninActivity : AppCompatActivity() {
 
     }
 
-    private fun emailFocusListener(){
+    private fun emailChangeListener(){
         val container = binding.emailContainer
         binding.emailEditText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -65,7 +64,7 @@ class SigninActivity : AppCompatActivity() {
 
     }
 
-    private fun passwordFocusListener(){
+    private fun passwordChangeListener(){
         val container = binding.passwordContainer
         binding.passwordEditText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
