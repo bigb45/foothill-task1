@@ -20,7 +20,7 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You are now signed in."
+        android:text="@string/signin_success"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:textSize="48sp"
