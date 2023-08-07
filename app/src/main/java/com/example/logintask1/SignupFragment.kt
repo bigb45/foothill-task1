@@ -5,17 +5,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.logintask1.databinding.ActivitySignupBinding
-import com.google.android.material.textfield.TextInputLayout
+import androidx.fragment.app.Fragment
+import com.example.logintask1.databinding.FragmentSignupBinding
 
-class SignupActivity: AppCompatActivity() {
-    private lateinit var binding: ActivitySignupBinding
+class SignupFragment: Fragment(R.layout.fragment_signup) {
+    private lateinit var binding: FragmentSignupBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignupBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = FragmentSignupBinding.inflate(layoutInflater)
 
         val signinText = binding.signinText
         val signupButton = binding.signinButton
@@ -29,8 +27,6 @@ class SignupActivity: AppCompatActivity() {
 
         signinText.setOnClickListener {
             Log.d("Debug", "signing in with existing account")
-            val signinIntent = Intent(this, SigninActivity::class.java)
-            startActivity(signinIntent)
         }
         emailChangeListener()
         passwordChangeListener()
@@ -38,8 +34,7 @@ class SignupActivity: AppCompatActivity() {
             val isEmailValid = binding.emailContainer.helperText == null
             val isPasswordValid = binding.signupPasswordContainer.helperText == null
             if(isEmailValid && isPasswordValid){
-                val mainPageIntent = Intent(this, MainActivity::class.java)
-                startActivity(mainPageIntent)
+                Log.d("Debug", "signing in with existing account")
             }
         }
 

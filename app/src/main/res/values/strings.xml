@@ -14,4 +14,5 @@
     <string name="name">Name</string>
     <string name="confirm_password">Confirm password</string>
     <string name="signin_success">You are now signed in.</string>
+    <string name="sign_up">Sign up</string>
 </resources>

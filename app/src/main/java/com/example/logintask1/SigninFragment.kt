@@ -1,23 +1,22 @@
 package com.example.logintask1
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.UnderlineSpan
 import android.util.Log
-import com.example.logintask1.databinding.ActivitySigninBinding
+import androidx.fragment.app.Fragment
+import com.example.logintask1.databinding.FragmentSigninBinding
 
 
-class SigninActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySigninBinding
+class SigninFragment : Fragment(R.layout.fragment_signin) {
+    private lateinit var binding: FragmentSigninBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySigninBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = FragmentSigninBinding.inflate(layoutInflater)
 
         val createAccountText = binding.signinText
         val signinButton = binding.signinButton
@@ -34,14 +33,12 @@ class SigninActivity : AppCompatActivity() {
             val isPasswordValid = (binding.emailContainer.helperText == null)
             val isEmailValid = (binding.passwordContainer.helperText == null)
             if(isEmailValid && isPasswordValid){
-                val mainPageIntent = Intent(this, MainActivity::class.java)
-                startActivity(mainPageIntent)
+                Log.d("hi", "hi")
             }
         }
         createAccountText.setOnClickListener {
             Log.d("Debug", "creating new account")
-            val signupIntent = Intent(this, SignupActivity::class.java)
-            startActivity(signupIntent)
+
         }
 
     }
