@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
+<<<<<<< Updated upstream
 import android.text.style.UnderlineSpan
 import android.util.Log
+=======
+import android.util.Log
+import android.view.View
+>>>>>>> Stashed changes
 import androidx.fragment.app.Fragment
 import com.example.logintask1.databinding.FragmentSigninBinding
-
 
 class SigninFragment : Fragment(R.layout.fragment_signin) {
     private lateinit var binding: FragmentSigninBinding
@@ -43,9 +47,19 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
 
     }
 
+<<<<<<< Updated upstream
     private fun emailChangeListener(){
         val container = binding.emailContainer
         binding.emailEditText.addTextChangedListener(object: TextWatcher {
+=======
+    private fun observe(container: TextInputLayout, memberToObserve: MutableLiveData<String?>){
+        memberToObserve.observe(viewLifecycleOwner,  Observer<String?> { text ->
+            container.helperText = text
+        })
+    }
+    private fun addChangeListener(editText: TextInputEditText, modelViewFunction: KFunction1<String, Unit>){
+        editText.addTextChangedListener(object: TextWatcher {
+>>>>>>> Stashed changes
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 // do nothing
             }
@@ -55,7 +69,12 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
             }
 
             override fun afterTextChanged(newText: Editable?) {
+<<<<<<< Updated upstream
                 container.helperText = validateEmail()
+=======
+                modelViewFunction(newText.toString())
+                Log.d("test", newText.toString())
+>>>>>>> Stashed changes
             }
         })
 
