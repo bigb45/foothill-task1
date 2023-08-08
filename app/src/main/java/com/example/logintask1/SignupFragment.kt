@@ -1,49 +1,40 @@
 package com.example.logintask1
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.example.logintask1.databinding.FragmentSignupBinding
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import kotlin.reflect.KFunction1
+
 
 class SignupFragment: Fragment(R.layout.fragment_signup) {
     private lateinit var binding: FragmentSignupBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = FragmentSignupBinding.inflate(layoutInflater)
+    private val model: SignupViewModel by viewModels()
 
-        val signinText = binding.signinText
-        val signupButton = binding.signinButton
-        val signupButtonGoogle = binding.signinButtonGoogle
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentSignupBinding.bind(view)
 
-
-        val passwordContainer = binding.signupPasswordContainer
-        val passwordEditText = binding.passwordEditText
-        val confirmPasswordEditText = binding.confirmPasswordEditText
+        binding.viewModel = model
 
 
-        signinText.setOnClickListener {
-            Log.d("Debug", "signing in with existing account")
-        }
-        emailChangeListener()
-        passwordChangeListener()
-        signupButton.setOnClickListener {
-            val isEmailValid = binding.emailContainer.helperText == null
-            val isPasswordValid = binding.signupPasswordContainer.helperText == null
-            if(isEmailValid && isPasswordValid){
-                Log.d("Debug", "signing in with existing account")
-            }
-        }
+//        val signupButton = binding.signinButton
+//        signupButton.setOnClickListener {
+//            val isEmailValid = binding.emailContainer.helperText == null
+//            val isPasswordValid = binding.signupPasswordContainer.helperText == null
+//            if(isEmailValid && isPasswordValid){
+//                Log.d("Debug", "signing in with existing account")
+//            }
 
-    }
-
-    private fun emailChangeListener(){
-        val container = binding.emailContainer
-
-        binding.emailEditText.addTextChangedListener(object: TextWatcher {
+        binding.nameEditText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 // do nothing
             }
@@ -53,16 +44,25 @@ class SignupFragment: Fragment(R.layout.fragment_signup) {
             }
 
             override fun afterTextChanged(newText: Editable?) {
-                container.helperText = validateEmail()
             }
         })
 
+
+        observe(binding.emailContainer, model.emailError)
+        observe(binding.signupPasswordContainer, model.passwordError)
+        observe(binding.signupPasswordContainer, model.confirmPassword)
+        addChangeListener(binding.emailEditText, model::updateEmailError)
+        addChangeListener(binding.passwordEditText, model::updatePasswordError)
+        addChangeListener(binding.confirmPasswordEditText, model:: updateConfirmPassword)
     }
 
-    private fun passwordChangeListener(){
-
-        val container = binding.signupPasswordContainer
-        binding.passwordEditText.addTextChangedListener(object: TextWatcher {
+    private fun observe(container: TextInputLayout, memberToObserve: MutableLiveData<String?>){
+        memberToObserve.observe(viewLifecycleOwner,  Observer<String?> { text ->
+            container.helperText = text
+        })
+    }
+    private fun addChangeListener(editText: TextInputEditText, modelViewFunction: KFunction1<String, Unit>){
+        editText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 // do nothing
             }
@@ -72,52 +72,8 @@ class SignupFragment: Fragment(R.layout.fragment_signup) {
             }
 
             override fun afterTextChanged(newText: Editable?) {
-                container.helperText = validatePassword()
+                modelViewFunction(newText.toString())
             }
         })
-
-        binding.confirmPasswordEditText.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // do nothing
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // do nothing
-            }
-
-            override fun afterTextChanged(newText: Editable?) {
-                container.helperText = validatePassword()
-            }
-        })
-
-
     }
-
-
-    private fun validateEmail(): String?{
-        val email = binding.emailEditText.text.toString()
-        val emailRegex = Regex(".+@.+[.com]$")
-        if(!emailRegex.matches(email)){
-            Log.d("email", "$email does not match the pattern!")
-            return "please enter a correct email"
-        }
-        return null
-    }
-
-    private fun validatePassword(): String?{
-        val confirmPassword = binding.confirmPasswordEditText.text.toString()
-        val password = binding.passwordEditText.text.toString()
-
-        if(password.length < 8){
-            return "password must have 8 or more characters"
-        }
-
-        if(password != confirmPassword){
-            Log.d("$password", "$confirmPassword")
-            return "passwords don't match"
-
-        }
-        return null
-    }
-
 }
