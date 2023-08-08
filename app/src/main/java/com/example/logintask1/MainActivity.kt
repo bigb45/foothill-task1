@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         binding.buttonSignup.setOnClickListener {
             replaceFragment(SignupFragment())
         }
-
     }
 
     private fun replaceFragment(fragment: Fragment){

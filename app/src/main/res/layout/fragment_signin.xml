@@ -87,7 +87,6 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="1dp"
-                app:helperText="@{viewModel.error}"
                 app:helperTextEnabled="true"
                 app:helperTextTextColor="@color/warning"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +96,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/emailEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:background="@drawable/edit_text_border"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp" />
@@ -116,7 +115,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordContainer"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="12"
                 app:helperTextTextColor="@color/warning"
@@ -128,7 +127,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     android:background="@drawable/edit_text_border"
                     android:inputType="textPassword"
                     android:paddingStart="10dp"
