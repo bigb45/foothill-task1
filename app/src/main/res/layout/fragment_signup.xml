@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.logintask1.SignupViewModel" />
+            type="com.example.logintask1.signupPackage.SignupViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginBottom="48dp"
-                app:helperText=""
+                app:helperText="@{viewModel.emailError}"
                 app:helperTextTextColor="@color/warning"
                 app:layout_constraintBottom_toTopOf="@+id/password"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -135,6 +135,7 @@
                     android:id="@+id/emailEditText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:text="@={viewModel.email}"
                     android:background="@drawable/edit_text_border"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp" />
@@ -159,7 +160,7 @@
                 android:layout_marginBottom="47dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="12"
-                app:helperText=""
+                app:helperText="@{viewModel.passwordError}"
                 app:helperTextTextColor="@color/warning"
                 app:layout_constraintBottom_toTopOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -170,6 +171,7 @@
                     android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:text="@={viewModel.password}"
                     android:background="@drawable/edit_text_border"
                     android:inputType="textPassword"
                     android:paddingStart="10dp"
@@ -191,10 +193,11 @@
                 android:id="@+id/confirmPasswordContainer"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-
                 android:layout_marginBottom="48dp"
+                app:helperTextTextColor="@color/warning"
                 app:layout_constraintBottom_toTopOf="@+id/signinButton"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:helperText="@{viewModel.confirmPasswordError}"
                 app:layout_constraintStart_toStartOf="@+id/textView4"
                 app:layout_constraintTop_toBottomOf="@+id/textView4">
 
@@ -202,6 +205,7 @@
                     android:id="@+id/confirmPasswordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:text="@={viewModel.confirmPassword}"
                     android:background="@drawable/edit_text_border"
                     android:inputType="textPassword"
                     android:paddingStart="10dp"

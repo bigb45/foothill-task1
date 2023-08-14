@@ -37,12 +37,12 @@ class SigninViewModel: ViewModel() {
 
 
 
-    private fun validateEmail(email: String?): String?{
+    private fun validateEmail(email: String?): String{
         val emailRegex = Regex(".+@.+(.com)$")
         if(!emailRegex.matches(email.toString())){
             return "Please enter a valid email"
         }
-        return null
+        return ""
     }
 
     private fun validatePassword(password: String?): String?{
