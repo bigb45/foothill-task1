@@ -11,20 +11,7 @@ class SignupViewModel : ViewModel() {
     var password: MutableLiveData<String?> = MutableLiveData()
     var confirmPassword: MutableLiveData<String?> = MutableLiveData()
 
-    //    fun updateEmailError(newEmail: String){
-//        email.value = newEmail
-//        emailError.value = validateEmail()
-//    }
-//    fun updateConfirmPassword(newConfirmPassword: String){
-//        confirmPassword.value = newConfirmPassword
-//        updatePasswordError(password.value.toString())
-//    }
-//
-//    fun updatePasswordError(newPassword: String){
-//        password.value = newPassword
-//        passwordError.value = validatePassword()
-//
-//    }
+
     val emailError = email.map {
 
             validateEmail(it)
