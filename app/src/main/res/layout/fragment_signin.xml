@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.example.logintask1.SigninViewModel" />
+            type="com.example.logintask1.signinPackage.SigninViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SigninFragment">
+    tools:context=".signinPackage.SigninFragment">
 
 
 
@@ -89,6 +89,7 @@
                 android:layout_marginTop="1dp"
                 app:helperTextEnabled="true"
                 app:helperTextTextColor="@color/warning"
+                app:helperText="@{viewModel.emailError}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/email"
                 app:layout_constraintTop_toBottomOf="@+id/email">
@@ -97,6 +98,7 @@
                     android:id="@+id/emailEditText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:text="@={viewModel.email}"
                     android:background="@drawable/edit_text_border"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp" />
@@ -119,6 +121,7 @@
                 app:counterEnabled="true"
                 app:counterMaxLength="12"
                 app:helperTextTextColor="@color/warning"
+                app:helperText="@{viewModel.passwordError}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/password_hint"
                 app:layout_constraintTop_toBottomOf="@+id/password_hint"
@@ -128,6 +131,7 @@
                     android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:text="@={viewModel.password}"
                     android:background="@drawable/edit_text_border"
                     android:inputType="textPassword"
                     android:paddingStart="10dp"
