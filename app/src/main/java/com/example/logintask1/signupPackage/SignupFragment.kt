@@ -25,54 +25,6 @@ class SignupFragment: Fragment(R.layout.fragment_signup) {
         binding.viewModel = model
         binding.lifecycleOwner = this
 
-//        val signupButton = binding.signinButton
-//        signupButton.setOnClickListener {
-//            val isEmailValid = binding.emailContainer.helperText == null
-//            val isPasswordValid = binding.signupPasswordContainer.helperText == null
-//            if(isEmailValid && isPasswordValid){
-//                Log.d("Debug", "signing in with existing account")
-//            }
-//
-//        binding.nameEditText.addTextChangedListener(object: TextWatcher {
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                // do nothing
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                // do nothing
-//            }
-//
-//            override fun afterTextChanged(newText: Editable?) {
-//            }
-//        })
-//
-//
-//        observe(binding.emailContainer, model.emailError)
-//        observe(binding.signupPasswordContainer, model.passwordError)
-//        observe(binding.signupPasswordContainer, model.confirmPassword)
-//        addChangeListener(binding.emailEditText, model::updateEmailError)
-//        addChangeListener(binding.passwordEditText, model::updatePasswordError)
-//        addChangeListener(binding.confirmPasswordEditText, model:: updateConfirmPassword)
     }
 
-//    private fun observe(container: TextInputLayout, memberToObserve: MutableLiveData<String?>){
-//        memberToObserve.observe(viewLifecycleOwner,  Observer<String?> { text ->
-//            container.helperText = text
-//        })
-//    }
-//    private fun addChangeListener(editText: TextInputEditText, modelViewFunction: KFunction1<String, Unit>){
-//        editText.addTextChangedListener(object: TextWatcher {
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                // do nothing
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                // do nothing
-//            }
-//
-//            override fun afterTextChanged(newText: Editable?) {
-//                modelViewFunction(newText.toString())
-//            }
-//        })
-//    }
 }
