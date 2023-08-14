@@ -1,10 +1,11 @@
 package com.example.logintask1
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.logintask1.databinding.ActivityMainBinding
+import com.example.logintask1.signinPackage.SigninFragment
+import com.example.logintask1.signupPackage.SignupFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
