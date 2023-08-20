@@ -1,4 +1,4 @@
-package com.example.logintask1.signupPackage
+package com.example.logintask1.ui.auth.signup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

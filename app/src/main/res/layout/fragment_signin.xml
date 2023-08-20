@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.example.logintask1.signinPackage.SigninViewModel" />
+            type="com.example.logintask1.ui.auth.signin.SigninViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signinPackage.SigninFragment">
+    tools:context=".ui.auth.signin.SigninFragment">
 
 
 
