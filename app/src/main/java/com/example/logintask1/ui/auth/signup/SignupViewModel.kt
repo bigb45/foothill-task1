@@ -1,4 +1,4 @@
-package com.example.logintask1.signupPackage
+package com.example.logintask1.ui.auth.signup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +14,7 @@ class SignupViewModel : ViewModel() {
 
     val emailError = email.map {
 
-            validateEmail(it)
+        validateEmail(it)
 
     }
 
@@ -24,11 +24,14 @@ class SignupViewModel : ViewModel() {
 
     }
 
-    val confirmPasswordError = confirmPassword.map{
+    val confirmPasswordError = confirmPassword.map {
         validateConfirmPassword(it)
 
     }
 
+//    TODO: this function should return a boolean value to the binding adapter in the fragment, the
+//     binding adapter takes that value and an error message and displays the error message on the
+//     textInputLayout accordingly
 
     private fun validateEmail(email: String?): String? {
         val emailRegex = Regex(".+@.+(.com)$")
