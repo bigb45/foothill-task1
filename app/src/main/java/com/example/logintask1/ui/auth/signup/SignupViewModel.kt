@@ -1,59 +1,58 @@
 package com.example.logintask1.ui.auth.signup
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 
 class SignupViewModel : ViewModel() {
 
+    private val _emailError = MutableLiveData<String?>()
+    private val _passwordError = MutableLiveData<String?>()
+    private val _confirmPasswordError = MutableLiveData<String?>()
 
-    var email: MutableLiveData<String?> = MutableLiveData()
+    // data to be set in the view
+    val emailError: LiveData<String?> = _emailError
+    val passwordError: LiveData<String?> = _passwordError
+    val confirmPasswordError: LiveData<String?> = _confirmPasswordError
+
+    // data coming from view
     var password: MutableLiveData<String?> = MutableLiveData()
+    var email: MutableLiveData<String?> = MutableLiveData()
     var confirmPassword: MutableLiveData<String?> = MutableLiveData()
 
-
-    val emailError = email.map {
-
-        validateEmail(it)
-
+    init {
+        email.observeForever { validateEmail() }
+        password.observeForever { validatePassword() }
+        confirmPassword.observeForever{ validateConfirmPassword() }
     }
 
-    val passwordError = password.map {
-
-        validatePassword(it)
-
-    }
-
-    val confirmPasswordError = confirmPassword.map {
-        validateConfirmPassword(it)
-
-    }
-
-//    TODO: this function should return a boolean value to the binding adapter in the fragment, the
-//     binding adapter takes that value and an error message and displays the error message on the
-//     textInputLayout accordingly
-
-    private fun validateEmail(email: String?): String? {
+    fun validateEmail(): Boolean {
         val emailRegex = Regex(".+@.+(.com)$")
-        if (!emailRegex.matches(email.toString())) {
-            return "Please enter a valid email"
+        val isValid = emailRegex.matches(email.value.toString()) || email.value?.isEmpty() ?: true
+        if (!isValid) {
+            _emailError.value = "Incorrect email format"
+        } else {
+            _emailError.value = null
         }
-        return null
+        return isValid
+    }
+    fun validatePassword(): Boolean {
+        val isValid = password.value.toString().length >= 8 || password.value?.isEmpty()?: true
+        if(!isValid){
+            _passwordError.value = "Password must be at least 8 characters"
+        }else {
+            _passwordError.value = null
+        }
+        return isValid
     }
 
-    private fun validatePassword(password: String?): String? {
-
-        if (password.toString().length < 8) {
-            return "password must have 8 or more characters"
-
+    fun validateConfirmPassword(): Boolean {
+        return if (confirmPassword.value.toString() != password.value.toString()) {
+            _confirmPasswordError.value = "Passwords don't match"
+            false
+        }else{
+            _confirmPasswordError.value = null
+            true
         }
-        return null
-    }
-
-    private fun validateConfirmPassword(confirmPassword: String?): String? {
-        if (confirmPassword.toString() != password.value.toString()) {
-            return "passwords don't match"
-        }
-        return null
     }
 }

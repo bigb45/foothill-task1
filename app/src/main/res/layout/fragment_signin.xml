@@ -85,7 +85,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailContainer"
                 errorMessage="@{viewModel.emailError}"
-                validateText="@{viewModel.validateEmail()}"
+                validateInput="@{viewModel.validateEmail()}"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="1dp"
@@ -116,7 +116,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordContainer"
                 errorMessage="@{viewModel.passwordError}"
-                validateText="@{viewModel.validatePassword()}"
+                validateInput="@{viewModel.validatePassword()}"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 app:counterEnabled="true"

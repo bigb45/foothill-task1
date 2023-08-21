@@ -16,10 +16,12 @@ class SignupFragment: Fragment(R.layout.fragment_signup) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSignupBinding.bind(view)
-        binding.viewModel = model
-        binding.lifecycleOwner = this
 
+        binding = FragmentSignupBinding.bind(view)
+        with(binding) {
+            viewModel = model
+            lifecycleOwner = this@SignupFragment
+        }
     }
 
 }

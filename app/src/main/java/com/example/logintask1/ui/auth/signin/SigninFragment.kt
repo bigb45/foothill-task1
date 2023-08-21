@@ -16,9 +16,13 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentSigninBinding.bind(view)
-        binding.viewModel = model
-        binding.lifecycleOwner = this
+        with(binding) {
+            viewModel = model
+            lifecycleOwner = this@SigninFragment
+        }
 
     }
+
+
 }
 

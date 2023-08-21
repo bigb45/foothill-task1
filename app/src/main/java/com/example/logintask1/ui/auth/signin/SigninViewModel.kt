@@ -19,11 +19,15 @@ class SigninViewModel : ViewModel() {
     var password: MutableLiveData<String?> = MutableLiveData()
     var email: MutableLiveData<String?> = MutableLiveData()
 
+
+    // observe email and password changes, call validating functions when they change
+    // another way is to use email.map and call the validation function inside
     init {
         email.observeForever { validateEmail() }
         password.observeForever { validatePassword() }
     }
 
+    // function to validate email with regex
     fun validateEmail(): Boolean {
         val emailRegex = Regex(".+@.+(.com)$")
         val isValid = emailRegex.matches(email.value.toString()) || email.value?.isEmpty() ?: true
@@ -34,6 +38,8 @@ class SigninViewModel : ViewModel() {
         }
         return isValid
     }
+
+    // function to validate password
 
     fun validatePassword(): Boolean {
         val isValid = password.value.toString().length >= 8 || password.value?.isEmpty()?: true
