@@ -5,7 +5,7 @@
     app:startDestination="@id/signinFragment">
     <fragment
         android:id="@+id/signinFragment"
-        android:name="com.example.logintask1.signinPackage.SigninFragment"
+        android:name="com.example.logintask1.ui.auth.signin.SigninFragment"
         android:label="SigninFragment" >
         <action
             android:id="@+id/action_signinFragment_to_signupFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.logintask1.signupPackage.SignupFragment"
+        android:name="com.example.logintask1.ui.auth.signup.SignupFragment"
         android:label="SignupFragment" >
         <action
             android:id="@+id/action_signupFragment_to_signinFragment"
