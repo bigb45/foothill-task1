@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.logintask1.R
 import com.example.logintask1.databinding.FragmentSigninBinding
 
@@ -19,6 +20,9 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
         with(binding) {
             viewModel = model
             lifecycleOwner = this@SigninFragment
+            signinButtonGoogle.setOnClickListener{
+                findNavController().navigate(R.id.action_signinFragment_to_homeFragment)
+            }
         }
 
     }
