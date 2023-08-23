@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
     app:startDestination="@id/signinFragment">
     <fragment
+        tools:layout="@layout/fragment_signin"
         android:id="@+id/signinFragment"
         android:name="com.example.logintask1.ui.auth.signin.SigninFragment"
         android:label="SigninFragment" >
@@ -12,13 +14,12 @@
             app:destination="@id/signupFragment" />
         <!-- Define reverse action -->
         <action
-            android:id="@+id/action_signinFragment_to_signupFragment_reversed"
-            app:destination="@id/signinFragment" />
-        <action
             android:id="@+id/action_signinFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment">
+        </action>
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_signup"
         android:id="@+id/signupFragment"
         android:name="com.example.logintask1.ui.auth.signup.SignupFragment"
         android:label="SignupFragment" >
@@ -31,7 +32,8 @@
             app:destination="@id/signinFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_home"
         android:id="@+id/homeFragment"
-        android:name="HomeFragment"
+        android:name="com.example.logintask1.ui.home.HomeFragment"
         android:label="HomeFragment" />
 </navigation>
