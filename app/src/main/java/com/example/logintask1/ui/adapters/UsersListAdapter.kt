@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.logintask1.data.ListItem
 import com.example.logintask1.databinding.ListItemBinding
 
-class MyListAdapter : ListAdapter<ListItem, MyListAdapter.ListItemViewHolder>(DiffCallback()) {
+class UsersListAdapter(
+    private val clickListener: (ListItem, Int) -> Unit
+): ListAdapter<ListItem, UsersListAdapter.ListItemViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
         val binding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,29 +22,22 @@ class MyListAdapter : ListAdapter<ListItem, MyListAdapter.ListItemViewHolder>(Di
 
         val currentItem = getItem(position)
         holder.bind(currentItem)
-//        holder.setListener(currentItem)
-        holder.itemView.setListener(currentItem, position)
-    }
-
-    private fun View.setListener(item: ListItem, position: Int) {
-        this.setOnClickListener {
-            item.isExpanded = !item.isExpanded
-            notifyItemChanged(position)
-        }
+        holder.itemView.setOnClickListener { clickListener(currentItem, position) }
     }
 
     class ListItemViewHolder(private val binding: ListItemBinding) : ViewHolder(binding.root) {
         fun bind(item: ListItem) {
+//            set the text for each item
             binding.textViewTitle.text = item.title
             binding.textViewDetails.text = item.details
+//            toggle visibility of details when expanded or collapsed
             binding.textViewDetails.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
-
+            binding.root.setOnClickListener{
 //            binding.imageViewThumbnail = item.image
 
+            }
         }
     }
-
-
 }
 
 

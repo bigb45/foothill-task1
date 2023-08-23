@@ -8,5 +8,4 @@ data class ListItem(
     val image: Image? = null,
     val details: String,
     var isExpanded: Boolean = false
-
 )
