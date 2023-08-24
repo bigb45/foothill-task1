@@ -16,6 +16,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <Button
+                android:id="@+id/buttonCaptureImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="capture image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonAddUser"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewFinder" />
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/viewFinder"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:layout_constraintBottom_toTopOf="@+id/buttonCaptureImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewUsers">
+
+            </androidx.camera.view.PreviewView>
+
             <TextView
                 android:id="@+id/textViewUsername"
                 android:layout_width="wrap_content"
@@ -31,7 +55,7 @@
                 android:id="@+id/recyclerViewUsers"
                 android:layout_width="0dp"
                 android:layout_height="400dp"
-                app:layout_constraintBottom_toTopOf="@+id/buttonAddUser"
+                app:layout_constraintBottom_toTopOf="@+id/viewFinder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,11 +66,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add user"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonCaptureImage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerViewUsers" />
+                app:layout_constraintStart_toEndOf="@+id/buttonCaptureImage"
+                app:layout_constraintTop_toTopOf="@+id/buttonCaptureImage" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </layout>
