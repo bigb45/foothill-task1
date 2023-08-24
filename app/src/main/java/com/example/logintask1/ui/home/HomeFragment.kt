@@ -1,20 +1,16 @@
 package com.example.logintask1.ui.home
 
-import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
+
 import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -24,8 +20,7 @@ import com.example.logintask1.R
 import com.example.logintask1.data.ListItem
 import com.example.logintask1.databinding.FragmentHomeBinding
 import com.example.logintask1.ui.adapters.UsersListAdapter
-import java.text.SimpleDateFormat
-import java.util.Locale
+import com.example.logintask1.util.PhotoTaker
 import java.util.Random
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -40,9 +35,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private var myList: ArrayList<ListItem>? = null
 
     //    setup the variables needed to capture an image
-    private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
-
+    private lateinit var photoTaker: PhotoTaker
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -52,122 +46,40 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             lifecycleOwner = this@HomeFragment
 //             binding.viewModel = viewModel
         }
-        imageCapture = ImageCapture.Builder().build()
         cameraExecutor = Executors.newSingleThreadExecutor()
+
+        photoTaker = PhotoTaker(requireContext(), viewLifecycleOwner)
 
         if (allPermissionsGranted()) {
             startCamera()
         } else {
             requestPermissions()
         }
-
         return binding.root
     }
 
-    private val activityResultLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            var permissionGranted = true
-            permissions.entries.forEach {
-                if (it.key in REQUIRED_PERMISSIONS && !it.value) {
-                    permissionGranted = false
-                }
-
-                if (!permissionGranted) {
-                    Toast.makeText(
-                        context,
-                        "Permission not granted.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    startCamera()
-                }
+    private val activityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        var permissionGranted = true
+        permissions.entries.forEach {
+            if (it.key in REQUIRED_PERMISSIONS && !it.value) {
+                permissionGranted = false
             }
 
+            if (!permissionGranted) {
+                Toast.makeText(
+                    context, "Permission not granted.", Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                startCamera()
+            }
         }
+
+    }
 
     private fun requestPermissions() {
         activityResultLauncher.launch(REQUIRED_PERMISSIONS)
-    }
-
-    private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
-
-        cameraProviderFuture.addListener({
-//            to define the preview use case, we need 3 things:
-
-//        a camera provider
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-
-//                a preview
-            val preview = Preview.Builder()
-                .build()
-                .also {
-                    it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
-                }
-
-//        and a camera selector
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-            try {
-//            unbind previous use case
-                cameraProvider.unbindAll()
-
-//              you need to bind image capture to the camera selector as well as the preview
-
-                val camera =
-                    cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
-
-
-                cameraProvider.bindToLifecycle(
-                    viewLifecycleOwner, cameraSelector, preview
-                )
-
-                imageCapture = ImageCapture.Builder()
-                    .setTargetRotation(camera.cameraInfo.sensorRotationDegrees)
-                    .build()
-
-            } catch (e: Exception) {
-                Log.e("couldnt", "launch preview")
-            }
-        }, ContextCompat.getMainExecutor(requireContext()))
-
-    }
-
-    private fun takePhoto() {
-        val imageCapture = imageCapture ?: return
-
-        val imageName = SimpleDateFormat("mm", Locale.US)
-            .format(System.currentTimeMillis()) + "image name"
-
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, imageName)
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
-        }
-
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(
-            requireContext().contentResolver,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            contentValues
-        ).build()
-
-        imageCapture.takePicture(
-            outputOptions,
-            ContextCompat.getMainExecutor(requireContext()),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onError(exception: ImageCaptureException) {
-                    Log.e("camera error", "failed to capture image: $exception")
-                }
-
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    Log.d("success", "captured image successfully")
-
-                }
-            }
-        )
-
     }
 
 
@@ -190,8 +102,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         setupAdapter()
         setupRecyclerView()
-        updateAdapter()
         setupButtonListener()
+        updateAdapter()
     }
 
     private fun setupAdapter() {
@@ -199,30 +111,43 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         adapter = UsersListAdapter { item: ListItem, position: Int ->
             item.isExpanded = !item.isExpanded
             adapter.notifyItemChanged(position)
-            Log.d("help", "${item.isExpanded}")
         }
+    }
+
+    private fun startCamera() {
+        val preview = Preview.Builder().build().also {
+            it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+        }
+        photoTaker.setupCamera(preview)
+
     }
 
     private fun setupButtonListener() {
-//        add list item button
-        binding.buttonAddUser.setOnClickListener {
-            val newList = ArrayList<ListItem>()
-            newList.addAll(myList!!)
-            val item = getRandomListItem()
-            newList.add(item)
-            myList = newList
-            adapter.submitList(myList)
-        }
 
-//        capture image button
         binding.buttonCaptureImage.setOnClickListener {
             takePhoto()
+//            Log.d("image uri", imageUri.toString())
+//            createAndAddListItemWithImage(imageUri)
         }
     }
 
-    private fun getRandomListItem(): ListItem {
-        val random = Random().nextInt(200)
-        return ListItem(random, "$random item", details = "details of item $random")
+    private fun takePhoto() {
+        photoTaker.takePhoto({ e ->
+            Log.e("Image capture error", "Error: $e")
+        }) { imageUri ->
+                createAndAddListItemWithImage(imageUri)
+        }
+    }
+
+    private fun getListItem(uri: Uri?): ListItem {
+        val id = Random().nextInt(200)
+
+        return ListItem(
+            id,
+            "greatest image of all time",
+            uri,
+            "this is the greatest picture of all time"
+        )
     }
 
     private fun setupRecyclerView() {
@@ -238,12 +163,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun updateAdapter() {
         myList = ArrayList()
-        for (i in 0..2) {
-            val item = ListItem(i, "Item $i", details = "details of item $i")
-            myList?.add(item)
-        }
         adapter.submitList(myList)
+
     }
 
+    private fun createAndAddListItemWithImage(imageUri: Uri?) {
+        val newList = ArrayList<ListItem>()
+        newList.addAll(myList!!)
+        val item = getListItem(imageUri)
+        newList.add(item)
+        myList = newList
+        adapter.submitList(myList)
 
+        Log.d("Success", "Saved image successfully")
+        Toast.makeText(
+            requireContext(), "image saved successfully", Toast.LENGTH_SHORT
+        ).show()
+    }
 }

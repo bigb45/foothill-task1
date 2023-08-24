@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
 import com.example.logintask1.data.ListItem
 import com.example.logintask1.databinding.ListItemBinding
 
@@ -20,6 +21,7 @@ class UsersListAdapter(
 
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
 
+
         val currentItem = getItem(position)
         holder.bind(currentItem)
         holder.itemView.setOnClickListener { clickListener(currentItem, position) }
@@ -28,14 +30,13 @@ class UsersListAdapter(
     class ListItemViewHolder(private val binding: ListItemBinding) : ViewHolder(binding.root) {
         fun bind(item: ListItem) {
 //            set the text for each item
+            Glide.with(binding.root)
+                .load(item.imageUri)
+                .into(binding.imageViewThumbnail)
             binding.textViewTitle.text = item.title
-            binding.textViewDetails.text = item.details
+            binding.textViewDetails.text = item.imageUri.toString()
 //            toggle visibility of details when expanded or collapsed
             binding.textViewDetails.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
-            binding.root.setOnClickListener{
-//            binding.imageViewThumbnail = item.image
-
-            }
         }
     }
 }

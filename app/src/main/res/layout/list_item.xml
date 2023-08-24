@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:layout_margin="20dp"
-    android:background="@drawable/list_item_background">
+    android:background="@drawable/list_item_background"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -25,7 +26,7 @@
         android:id="@+id/imageViewThumbnail"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:background="@drawable/baseline_account_box_24"
+        android:background="@drawable/image_view_rounded_corners_background"
         app:layout_constraintBottom_toTopOf="@+id/textViewDetails"
         app:layout_constraintEnd_toStartOf="@+id/textViewTitle"
         app:layout_constraintHorizontal_bias="0.5"

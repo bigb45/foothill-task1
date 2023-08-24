@@ -1,11 +1,11 @@
 package com.example.logintask1.data
 
-import android.media.Image
+import android.net.Uri
 
 data class ListItem(
     val id: Int,
     val title: String,
-    val image: Image? = null,
+    val imageUri: Uri? = null,
     val details: String,
     var isExpanded: Boolean = false
 )
