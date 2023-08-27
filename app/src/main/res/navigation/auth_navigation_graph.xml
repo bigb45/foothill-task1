@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_signupFragment_to_signinFragment_reversed"
             app:destination="@id/signinFragment" />
+        <action
+            android:id="@+id/action_signupFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
     </fragment>
     <activity
         android:id="@+id/homeActivity"
