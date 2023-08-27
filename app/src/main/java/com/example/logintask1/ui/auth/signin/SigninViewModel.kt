@@ -30,26 +30,33 @@ class SigninViewModel : ViewModel() {
     // function to validate email with regex
     fun validateEmail(): Boolean {
         val emailRegex = Regex(".+@.+(.com)$")
-        val isValid = emailRegex.matches(email.value.toString()) || email.value?.isEmpty() ?: true
+        val isValid = emailRegex.matches(email.value.toString()) || email.value?.isEmpty()?: true
         if (!isValid) {
             _emailError.value = "Incorrect email format"
         } else {
             _emailError.value = null
         }
-        return isValid
+        return isValid && email.value?.isEmpty() == false
     }
 
     // function to validate password
 
     fun validatePassword(): Boolean {
-        val isValid = password.value.toString().length >= 8 || password.value?.isEmpty()?: true
+        val isValid = (password.value.toString().length in 8..12)|| password.value?.isEmpty()?: true
         if(!isValid){
-            _passwordError.value = "Password must be at least 8 characters"
-        }else {
+            _passwordError.value = "Password must be between 8 and 12 characters"
+        } else {
             _passwordError.value = null
         }
-        return isValid
+        return isValid && password.value?.isEmpty() == false
 
     }
+
+    fun validateFields(): Boolean {
+        val emailCondition = validateEmail()
+        val passwordCondition = validatePassword()
+        return emailCondition && passwordCondition
+    }
+
 
 }

@@ -26,9 +26,11 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
 
     }
     private fun setupButtonListener(){
-        binding.signinButtonGoogle.setOnClickListener{
-            val directions = SigninFragmentDirections.actionSigninFragmentToHomeActivity()
-            findNavController().navigate(directions)
+        binding.signinButton.setOnClickListener{
+            if(model.validateFields()){
+                val directions = SigninFragmentDirections.actionSigninFragmentToHomeActivity()
+                findNavController().navigate(directions)
+            }
         }
     }
 
