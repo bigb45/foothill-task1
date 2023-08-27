@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
 
     <data>
 
@@ -21,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
-                android:text="capture image"
+                android:text="@string/capture_image"
                 app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
                 app:layout_constraintEnd_toEndOf="@+id/viewFinder"
                 app:layout_constraintStart_toStartOf="@+id/viewFinder" />

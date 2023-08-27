@@ -14,9 +14,8 @@
             app:destination="@id/signupFragment" />
         <!-- Define reverse action -->
         <action
-            android:id="@+id/action_signinFragment_to_homeFragment"
-            app:destination="@id/homeFragment">
-        </action>
+            android:id="@+id/action_signinFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_signup"
@@ -31,9 +30,15 @@
             android:id="@+id/action_signupFragment_to_signinFragment_reversed"
             app:destination="@id/signinFragment" />
     </fragment>
-    <fragment
-        tools:layout="@layout/fragment_home"
-        android:id="@+id/homeFragment"
-        android:name="com.example.logintask1.ui.home.HomeFragment"
-        android:label="HomeFragment" />
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="com.example.logintask1.ui.home.HomeActivity"
+        android:label="HomeActivity"
+        tools:layout="@layout/fragment_home">
+        <argument app:argType="string"
+            android:defaultValue="Username"
+            app:nullable="false"
+            android:name="user"/>
+    </activity>
+
 </navigation>

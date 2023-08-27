@@ -20,11 +20,16 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
         with(binding) {
             viewModel = model
             lifecycleOwner = this@SigninFragment
-            signinButtonGoogle.setOnClickListener{
-                findNavController().navigate(R.id.action_signinFragment_to_homeFragment)
-            }
         }
 
+        setupButtonListener()
+
+    }
+    private fun setupButtonListener(){
+        binding.signinButtonGoogle.setOnClickListener{
+            val directions = SigninFragmentDirections.actionSigninFragmentToHomeActivity()
+            findNavController().navigate(directions)
+        }
     }
 
 

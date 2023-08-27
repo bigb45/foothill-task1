@@ -38,9 +38,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var photoTaker: PhotoTaker
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         with(binding) {
             lifecycleOwner = this@HomeFragment
