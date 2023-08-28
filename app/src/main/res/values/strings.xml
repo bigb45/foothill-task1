@@ -62,5 +62,10 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="capture_image">capture image</string>
+    <string name="capture_image">Capture image</string>
+    <string name="details">Details</string>
+    <string name="ok">OK</string>
+    <string name="title">Title</string>
+    <string name="dialog_title">Card name</string>
+    <string name="confirm">Confirm</string>
 </resources>

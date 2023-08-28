@@ -34,7 +34,7 @@ class UsersListAdapter(
                 .load(item.imageUri)
                 .into(binding.imageViewThumbnail)
             binding.textViewTitle.text = item.title
-            binding.textViewDetails.text = item.imageUri.toString()
+            binding.textViewDetails.text = item.details
 //            toggle visibility of details when expanded or collapsed
             binding.textViewDetails.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
         }

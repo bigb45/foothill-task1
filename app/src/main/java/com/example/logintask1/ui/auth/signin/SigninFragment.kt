@@ -32,7 +32,13 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
                 findNavController().navigate(directions)
             }
         }
+
+        binding.signinButtonGoogle.setOnClickListener {
+            val directions = SigninFragmentDirections.actionSigninFragmentToHomeActivity()
+            findNavController().navigate(directions)
+        }
     }
+
 
 
 }

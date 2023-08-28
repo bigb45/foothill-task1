@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:layout_margin="20dp"
+    android:layout_margin="10dp"
     android:background="@drawable/list_item_background"
+    android:elevation="5dp"
     android:padding="10dp">
 
     <TextView
@@ -18,19 +19,15 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewThumbnail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageViewThumbnail"
         app:layout_constraintTop_toTopOf="@+id/imageViewThumbnail" />
 
     <ImageView
-        android:scaleType="centerCrop"
         android:id="@+id/imageViewThumbnail"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:background="@drawable/image_view_rounded_corners_background"
-        app:layout_constraintBottom_toTopOf="@+id/textViewDetails"
-        app:layout_constraintEnd_toStartOf="@+id/textViewTitle"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,12 +35,14 @@
         android:id="@+id/textViewDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="Details"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:text="@string/details"
+        android:textSize="20sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textViewTitle"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/imageViewThumbnail"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewThumbnail" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+        tools:visibility="invisible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

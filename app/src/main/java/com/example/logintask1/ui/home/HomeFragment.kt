@@ -25,22 +25,23 @@ import java.util.Random
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+
 val REQUIRED_PERMISSIONS = arrayOf(
     android.Manifest.permission.CAMERA,
 )
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home), TitleDialogFragment.InputDialogListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: UsersListAdapter
     private var myList: ArrayList<ListItem>? = null
+    private var capturedImageUri: Uri? = null
+
 
     //    setup the variables needed to capture an image
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var photoTaker: PhotoTaker
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         with(binding) {
@@ -59,6 +60,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         return binding.root
     }
 
+
     private val activityResultLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -70,7 +72,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             if (!permissionGranted) {
                 Toast.makeText(
-                    context, "Permission not granted.", Toast.LENGTH_SHORT
+                    requireContext(), "Permission not granted.", Toast.LENGTH_SHORT
                 ).show()
             } else {
                 startCamera()
@@ -82,7 +84,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun requestPermissions() {
         activityResultLauncher.launch(REQUIRED_PERMISSIONS)
     }
-
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
 //        iterates over every permission in the array and checks if it has been granted
@@ -124,11 +125,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setupButtonListener() {
-
         binding.buttonCaptureImage.setOnClickListener {
             takePhoto()
-//            Log.d("image uri", imageUri.toString())
-//            createAndAddListItemWithImage(imageUri)
         }
     }
 
@@ -136,49 +134,53 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         photoTaker.takePhoto({ e ->
             Log.e("Image capture error", "Error: $e")
         }) { imageUri ->
-                createAndAddListItemWithImage(imageUri)
+            capturedImageUri = imageUri
+            val customDialog = TitleDialogFragment()
+            customDialog.setInputDialogListener(this)
+            customDialog.showDialog(childFragmentManager)
         }
     }
 
-    private fun getListItem(uri: Uri?): ListItem {
-        val id = Random().nextInt(200)
-
-        return ListItem(
-            id,
-            "greatest image of all time",
-            uri,
-            "this is the greatest picture of all time"
+    private fun createAndAddListItemWithImage(title: String, details: String) {
+        val newList = ArrayList<ListItem>()
+        Log.d("details", details)
+        newList.addAll(myList!!)
+        val item = ListItem(
+            imageUri = capturedImageUri,
+            title = title,
+            details = details,
+            id = Random().nextInt(200)
         )
+        newList.add(item)
+        myList = newList
+        adapter.submitList(myList)
+
+        Toast.makeText(
+            requireContext(), "image saved successfully", Toast.LENGTH_SHORT
+        ).show()
+    }
+
+
+    override fun onInputConfirmed(title: String, details: String) {
+        createAndAddListItemWithImage(title, details)
     }
 
     private fun setupRecyclerView() {
 
-        binding.recyclerViewUsers.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.recyclerViewUsers.adapter = adapter
+        binding.recyclerViewUsers.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = adapter
 
 //        stops the list item from flickering when click
-        (binding.recyclerViewUsers.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
-            false
+            (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
+                false
+        }
     }
 
     private fun updateAdapter() {
         myList = ArrayList()
         adapter.submitList(myList)
-
     }
 
-    private fun createAndAddListItemWithImage(imageUri: Uri?) {
-        val newList = ArrayList<ListItem>()
-        newList.addAll(myList!!)
-        val item = getListItem(imageUri)
-        newList.add(item)
-        myList = newList
-        adapter.submitList(myList)
-
-        Log.d("Success", "Saved image successfully")
-        Toast.makeText(
-            requireContext(), "image saved successfully", Toast.LENGTH_SHORT
-        ).show()
-    }
 }
