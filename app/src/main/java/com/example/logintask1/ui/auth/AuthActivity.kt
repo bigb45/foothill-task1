@@ -1,43 +1,50 @@
 package com.example.logintask1
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.logintask1.databinding.ActivityAuthBinding
+import com.example.logintask1.ui.auth.signin.SigninFragmentDirections
+import com.google.android.material.tabs.TabLayout
+
 
 class AuthActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navController = findNavController(R.id.fragmentContainerView)
-        setupButtonListeners(navController)
+
+        binding.tabLayout.addOnTabSelectedListener(tabSelectListener)
+    }
+    private val tabSelectListener =  object: TabLayout.OnTabSelectedListener {
+
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            when (tab?.position) {
+                0 -> {
+                    val directions = SigninFragmentDirections.actionSigninFragmentToHomeActivity()
+//                    findNavController(R.id.).navigate(directions)
+                }
+                1 -> {
+                    val directions = SigninFragmentDirections.actionSigninFragmentToHomeActivity()
+//                    findNavController().navigate(directions)
+                }
+            }
+
+        }
+
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+        }
+
 
     }
 
-    private fun setupButtonListeners(navController: NavController) {
-        // this should be replaced with a bottomNavBar and a setupWithBottomNavBar func
-
-        binding.buttonSignin.setOnClickListener {
-
-            if (navController.currentDestination?.id != R.id.signinFragment) {
-                val action = R.id.action_signupFragment_to_signinFragment
-                navController.navigate(action)
-            }
-        }
-
-        binding.buttonSignup.setOnClickListener {
-
-            if (navController.currentDestination?.id != R.id.signupFragment) {
-                val action = R.id.action_signinFragment_to_signupFragment
-                navController.navigate(action)
-            }
-        }
-
-
-    }
 
 }
