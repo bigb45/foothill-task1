@@ -15,16 +15,18 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_up"/>
+            android:text="@string/sign_in"/>
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_in"/>
+            android:text="@string/sign_up"/>
 
     </com.google.android.material.tabs.TabLayout>
 
 
+
     <fragment
+
         android:id="@+id/fragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
@@ -46,26 +48,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/buttonSignup"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/sign_up"
-            android:textColor="#4DB6AC" />
-
-        <Button
-            android:id="@+id/buttonSignin"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/sign_in"
-            android:textColor="#4DB6AC"
-            tools:ignore="DuplicateSpeakableTextCheck" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
