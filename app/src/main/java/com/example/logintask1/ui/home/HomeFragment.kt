@@ -32,7 +32,7 @@ val REQUIRED_PERMISSIONS = arrayOf(
 
 class HomeFragment : Fragment(R.layout.fragment_home), TitleDialogFragment.InputDialogListener {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapter: UsersListAdapter
+    private lateinit var myAdapter: UsersListAdapter
     private var myList: ArrayList<ListItem>? = null
     private var capturedImageUri: Uri? = null
 
@@ -60,26 +60,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), TitleDialogFragment.Input
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    private val activityResultLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        var permissionGranted = true
-        permissions.entries.forEach {
-            if (it.key in REQUIRED_PERMISSIONS && !it.value) {
-                permissionGranted = false
-            }
-
-            if (!permissionGranted) {
-                Toast.makeText(
-                    requireContext(), "Permission not granted.", Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                startCamera()
-            }
-        }
-
+        setupAdapter()
+        setupRecyclerView()
+        setupButtonListener()
+        updateAdapter()
     }
+
 
     private fun requestPermissions() {
         activityResultLauncher.launch(REQUIRED_PERMISSIONS)
@@ -99,20 +88,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), TitleDialogFragment.Input
         cameraExecutor.shutdown()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        setupAdapter()
-        setupRecyclerView()
-        setupButtonListener()
-        updateAdapter()
-    }
 
     private fun setupAdapter() {
 //                listener lambda function to pass to the adapter
-        adapter = UsersListAdapter { item: ListItem, position: Int ->
+            myAdapter = UsersListAdapter { item: ListItem, position: Int ->
             item.isExpanded = !item.isExpanded
-            adapter.notifyItemChanged(position)
+            myAdapter.notifyItemChanged(position)
         }
     }
 
@@ -153,7 +135,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), TitleDialogFragment.Input
         )
         newList.add(item)
         myList = newList
-        adapter.submitList(myList)
+        myAdapter.submitList(myList)
 
         Toast.makeText(
             requireContext(), "image saved successfully", Toast.LENGTH_SHORT
@@ -170,17 +152,38 @@ class HomeFragment : Fragment(R.layout.fragment_home), TitleDialogFragment.Input
         binding.recyclerViewUsers.apply {
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = adapter
+            this.adapter = myAdapter
 
 //        stops the list item from flickering when click
             (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
                 false
+
         }
     }
 
     private fun updateAdapter() {
         myList = ArrayList()
-        adapter.submitList(myList)
+        myAdapter.submitList(myList)
+    }
+
+    private val activityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        var permissionGranted = true
+        permissions.entries.forEach {
+            if (it.key in REQUIRED_PERMISSIONS && !it.value) {
+                permissionGranted = false
+            }
+
+            if (!permissionGranted) {
+                Toast.makeText(
+                    requireContext(), "Permission not granted.", Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                startCamera()
+            }
+        }
+
     }
 
 }

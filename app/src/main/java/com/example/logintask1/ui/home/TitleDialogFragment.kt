@@ -25,13 +25,13 @@ class TitleDialogFragment : DialogFragment() {
         return AlertDialog.Builder(requireContext())
             .setMessage(getString(R.string.dialog_title))
             .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-                confirmListener()
+                confirmButtonListener()
             }
             .setView(dialogBinding.root)
             .create()
     }
     companion object {
-        const val TAG = "PurchaseConfirmationDialog"
+        const val TAG = "EnterTitleDialog"
 
 
     }
@@ -43,7 +43,7 @@ class TitleDialogFragment : DialogFragment() {
     fun setInputDialogListener(listener: InputDialogListener){
         inputDialogListener = listener
     }
-    private fun confirmListener(){
+    private fun confirmButtonListener(){
         val title = dialogBinding.editTextTitle.text.toString()
         val details = dialogBinding.editTextDetails.text.toString()
 

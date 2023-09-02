@@ -1,12 +1,15 @@
 package com.example.logintask1.ui.auth.signin
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.logintask1.R
 import com.example.logintask1.databinding.FragmentSigninBinding
+import com.example.logintask1.ui.home.HomeActivity
 
 
 class SigninFragment : Fragment(R.layout.fragment_signin) {
@@ -28,18 +31,19 @@ class SigninFragment : Fragment(R.layout.fragment_signin) {
     private fun setupButtonListener(){
         binding.signinButton.setOnClickListener{
             if(model.validateFields()){
-                val directions = SigninFragmentDirections.actionSigninFragmentToHomeActivity()
-                findNavController().navigate(directions)
+                startHomeActivity()
             }
         }
 
         binding.signinButtonGoogle.setOnClickListener {
-            val directions = SigninFragmentDirections.actionSigninFragmentToHomeActivity()
-            findNavController().navigate(directions)
+           startHomeActivity()
         }
     }
 
-
+    private fun startHomeActivity(){
+        val intent = Intent(context, HomeActivity::class.java)
+        startActivity(intent)
+    }
 
 }
 
