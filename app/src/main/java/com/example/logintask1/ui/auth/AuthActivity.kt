@@ -23,19 +23,18 @@ class AuthActivity : AppCompatActivity() {
         navController = findNavController(R.id.fragmentContainerView)
         binding.tabLayout.addOnTabSelectedListener(tabSelectListener)
     }
+
+
     private val tabSelectListener =  object: TabLayout.OnTabSelectedListener {
 
         override fun onTabSelected(tab: TabLayout.Tab?) {
             when (tab?.position) {
                 1 -> {
                     val action = SigninFragmentDirections.actionSigninFragmentToSignupFragment()
-//
                     navController.navigate(action)
-//                    Log.d("pos", tab?.position.toString())
                 }
                 0 -> {
                     val action = SignupFragmentDirections.actionSignupFragmentToSigninFragment()
-                    Log.d("pos", tab?.position.toString())
                     navController.navigate(action)
                 }
             }
