@@ -21,7 +21,6 @@ class UsersListAdapter(
 
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
 
-
         val currentItem = getItem(position)
         holder.bind(currentItem)
         holder.itemView.setOnClickListener { clickListener(currentItem, position) }

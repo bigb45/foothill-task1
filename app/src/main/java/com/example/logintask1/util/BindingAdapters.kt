@@ -12,8 +12,8 @@ object BindingAdapters {
        }else{
            view.error = error
        }
-
     }
+
 
 
 }

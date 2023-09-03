@@ -1,11 +1,9 @@
-package com.example.logintask1
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import com.example.logintask1.R
 import com.example.logintask1.databinding.ActivityAuthBinding
 import com.example.logintask1.ui.auth.signin.SigninFragmentDirections
 import com.example.logintask1.ui.auth.signup.SignupFragmentDirections
