@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
-
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.example.logintask1.ui.home.HomeViewModel" />
     </data>
 
     <FrameLayout
@@ -47,12 +48,24 @@
                 android:id="@+id/recyclerViewUsers"
                 android:layout_width="0dp"
                 android:layout_height="400dp"
+                app:items="@{viewModel.homeState.imagesList}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+<!--            <TextView-->
+<!--                android:id="@+id/textView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="no test"-->
+<!--                app:test="@{viewModel.test}"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/buttonCaptureImage" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

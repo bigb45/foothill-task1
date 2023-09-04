@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.logintask1.data.ListItem
-import com.example.logintask1.databinding.ListItemBinding
+
 
 class UsersListAdapter(
     private val clickListener: (ListItem, Int) -> Unit
@@ -20,7 +20,6 @@ class UsersListAdapter(
     }
 
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
-
         val currentItem = getItem(position)
         holder.bind(currentItem)
         holder.itemView.setOnClickListener { clickListener(currentItem, position) }

@@ -14,6 +14,8 @@ import androidx.camera.core.Preview
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.logintask1.R
@@ -30,9 +32,10 @@ val REQUIRED_PERMISSIONS = arrayOf(
     android.Manifest.permission.CAMERA,
 )
 
-class HomeFragment : Fragment(R.layout.fragment_home), TitleDialogFragment.InputDialogListener {
+class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var myAdapter: UsersListAdapter
+    private val viewModel : HomeViewModel by viewModels()
     private var myList: ArrayList<ListItem>? = null
     private var capturedImageUri: Uri? = null
 
@@ -40,14 +43,18 @@ class HomeFragment : Fragment(R.layout.fragment_home), TitleDialogFragment.Input
     //    setup the variables needed to capture an image
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var photoTaker: PhotoTaker
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         with(binding) {
             lifecycleOwner = this@HomeFragment
-//             binding.viewModel = viewModel
+             viewModel = viewModel
         }
+
+
+
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         photoTaker = PhotoTaker(requireContext(), viewLifecycleOwner)
@@ -133,9 +140,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), TitleDialogFragment.Input
             details = details,
             id = Random().nextInt(200)
         )
+        viewModel.addImage(capturedImageUri!!, title, details)
         newList.add(item)
         myList = newList
-        myAdapter.submitList(myList)
+//        myAdapter.submitList(myList)
 
         Toast.makeText(
             requireContext(), "image saved successfully", Toast.LENGTH_SHORT
