@@ -30,8 +30,5 @@ class HomeViewModel : ViewModel() {
 
     }
 
-    fun toggleItemsExpanded(){
-        _isExpanded.value = !_isExpanded.value!!
 
-    }
 }

@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.logintask1.data.ListItem
-import com.example.logintask1.databinding.ListItemBinding
 import com.example.logintask1.ui.home.adapters.UsersListAdapter
 import com.google.android.material.textfield.TextInputLayout
 
@@ -31,8 +30,18 @@ object BindingAdapters {
 
     @BindingAdapter("expand")
     @JvmStatic
-    fun expandView(view: ListItemBinding, isExpanded: Boolean) {
-        view.imageViewThumbnail.visibility = if(isExpanded) View.VISIBLE else View.GONE
+    fun expandView(view: TextView, isExpanded: Boolean) {
+        Log.d("view is visible:", isExpanded.toString())
+        if(isExpanded) {
+            Log.d("view", "is visible")
+
+            view.visibility = View.VISIBLE
+        } else {
+            Log.d("view", "is not visible")
+
+            view.visibility = View.GONE
+        }
+
     }
 
 
