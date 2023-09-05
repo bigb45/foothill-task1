@@ -1,8 +1,8 @@
 package com.example.logintask1.ui.auth
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.example.logintask1.R
@@ -18,11 +18,18 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAuthBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_auth)
+        initView()
+    }
+
+
+    private fun initView(){
         navController = findNavController(R.id.fragmentContainerView)
         binding.tabLayout.addOnTabSelectedListener(tabSelectListener)
     }
+
+    //TODO you need to integrate the tab layout directly with navController
+    // use viewPager 2
 
 
     private val tabSelectListener =  object: TabLayout.OnTabSelectedListener {
@@ -41,14 +48,9 @@ class AuthActivity : AppCompatActivity() {
 
         }
 
-        override fun onTabReselected(tab: TabLayout.Tab?) {
+        override fun onTabReselected(tab: TabLayout.Tab?) {}
 
-        }
-
-        override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-        }
-
+        override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
     }
 

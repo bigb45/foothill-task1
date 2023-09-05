@@ -16,9 +16,10 @@ import com.example.logintask1.databinding.ListItemBinding
 class UsersListAdapter(
     private val clickListener: (ListItem, Int) -> Unit
 ): ListAdapter<ListItem, UsersListAdapter.ListItemViewHolder>(DiffCallback()) {
+    private lateinit var binding: ListItemBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
-        val binding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListItemViewHolder(binding)
     }
 
@@ -30,14 +31,17 @@ class UsersListAdapter(
 
     class ListItemViewHolder(private val binding: ListItemBinding) : ViewHolder(binding.root) {
         fun bind(item: ListItem) {
+            with(binding){
+                uiModel = item.toUiModel()
+            }
 //            set the text for each item
-            Glide.with(binding.root)
-                .load(item.imageUri)
-                .into(binding.imageViewThumbnail)
-            binding.textViewTitle.text = item.title
-            binding.textViewDetails.text = item.details
-//            toggle visibility of details when expanded or collapsed
-            binding.textViewDetails.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
+//            Glide.with(binding.root)
+//                .load(item.imageUri)
+//                .into(binding.imageViewThumbnail)
+//            binding.textViewTitle.text = item.title
+//            binding.textViewDetails.text = item.details
+////            toggle visibility of details when expanded or collapsed
+//            binding.textViewDetails.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
         }
     }
 }

@@ -2,9 +2,11 @@ package com.example.logintask1.util
 
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.logintask1.data.ListItem
 import com.example.logintask1.ui.home.adapters.UsersListAdapter
 import com.google.android.material.textfield.TextInputLayout
@@ -41,7 +43,13 @@ object BindingAdapters {
 
             view.visibility = View.GONE
         }
+    }
 
+    @BindingAdapter("imageUrl")
+    fun ImageView.setImageUrl(imageUri:String){
+        Glide.with(context)
+                .load(imageUri)
+                .into(this)
     }
 
 

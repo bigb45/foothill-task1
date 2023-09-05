@@ -5,8 +5,9 @@
     android:elevation="10dp">
 
     <data>
-
-
+        <variable
+            name="uiModel"
+            type="" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,6 +46,7 @@
 
             <ImageView
                 android:id="@+id/imageViewThumbnail"
+                app:imageUrl="@{uiModel.imageUrl}"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:scaleType="centerCrop" />
@@ -58,6 +60,7 @@
             android:layout_marginBottom="50dp"
             android:text="@string/details"
             android:textSize="20sp"
+            app:expand="@{uiModel.isExpanded}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
