@@ -1,4 +1,4 @@
-package com.example.logintask1.ui.adapters
+package com.example.logintask1.ui.home.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.logintask1.data.ListItem
+import com.example.logintask1.databinding.ListItemBinding
+
 
 
 class UsersListAdapter(

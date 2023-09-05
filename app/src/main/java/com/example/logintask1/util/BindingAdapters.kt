@@ -7,7 +7,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.logintask1.data.ListItem
 import com.example.logintask1.databinding.ListItemBinding
-import com.example.logintask1.ui.adapters.UsersListAdapter
+import com.example.logintask1.ui.home.adapters.UsersListAdapter
 import com.google.android.material.textfield.TextInputLayout
 
 object BindingAdapters {
@@ -29,18 +29,13 @@ object BindingAdapters {
         adapter.submitList(items)
     }
 
-//    @BindingAdapter("expand")
-//    @JvmStatic
-//    fun expandView(view: ListItemBinding, isExpanded: Boolean) {
-//        view.imageViewThumbnail.visibility = if(isExpanded) View.VISIBLE else View.GONE
-//    }
-
-    @BindingAdapter("test")
+    @BindingAdapter("expand")
     @JvmStatic
-    fun testAdapter(view: TextView, test: String){
-        Log.d("test value", test)
-        view.text = test
+    fun expandView(view: ListItemBinding, isExpanded: Boolean) {
+        view.imageViewThumbnail.visibility = if(isExpanded) View.VISIBLE else View.GONE
     }
+
+
 
 
 }

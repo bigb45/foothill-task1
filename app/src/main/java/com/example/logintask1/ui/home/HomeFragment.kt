@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.logintask1.R
 import com.example.logintask1.data.ListItem
 import com.example.logintask1.databinding.FragmentHomeBinding
-import com.example.logintask1.ui.adapters.UsersListAdapter
+import com.example.logintask1.ui.home.adapters.UsersListAdapter
 import com.example.logintask1.util.PhotoTaker
 import java.util.Random
 import java.util.concurrent.ExecutorService
@@ -49,11 +49,11 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         with(binding) {
+
+//            this line single-handedly caused me 2 days of pain and suffering
+             viewModel = this@HomeFragment.viewModel
             lifecycleOwner = this@HomeFragment
-             viewModel = viewModel
         }
-
-
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
