@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
 import android.os.Environment
@@ -16,22 +17,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.Preview
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.logintask1.R
 import com.example.logintask1.data.ListItem
 import com.example.logintask1.databinding.FragmentHomeBinding
 import com.example.logintask1.ui.home.adapters.UsersListAdapter
-import com.example.logintask1.util.BindingAdapters.setImageUrl
-import com.example.logintask1.util.PhotoTaker
+
 import java.util.Random
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 
 val REQUIRED_PERMISSIONS = arrayOf(
@@ -44,11 +41,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     private val viewModel: HomeViewModel by viewModels()
     private var myList: ArrayList<ListItem>? = null
     private var capturedImageUri: Uri? = null
-    private var imageBitmap: Bitmap? = null
-
-    //    setup the variables needed to capture an image
-    private lateinit var cameraExecutor: ExecutorService
-    private lateinit var photoTaker: PhotoTaker
+    private var imageThumbnail: Bitmap? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -61,9 +54,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
             lifecycleOwner = this@HomeFragment
         }
 
-        cameraExecutor = Executors.newSingleThreadExecutor()
 
-        photoTaker = PhotoTaker(requireContext(), viewLifecycleOwner)
 
         if (allPermissionsGranted()) {
 //            startCamera()
@@ -73,6 +64,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
@@ -90,8 +82,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
                 }
             }
         }
-
-
         setupAdapter()
         setupRecyclerView()
         setupButtonListener()
@@ -99,6 +89,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun dispatchCaptureIntent() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         val values = ContentValues()
@@ -115,20 +106,20 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     private val cameraAppLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == android.app.Activity.RESULT_OK) {
-
-
-            binding.imageView2.setImageUrl(capturedImageUri!!)
-            val thumbnail = requireContext().contentResolver.loadThumbnail(
+            imageThumbnail = requireContext().contentResolver.loadThumbnail(
                 capturedImageUri!!,
-                Size(25, 25),
+                Size(250, 250),
                 CancellationSignal()
             )
-            binding.imageView3.setImageBitmap(thumbnail)
 
+            val customDialog = TitleDialogFragment()
+            customDialog.setInputDialogListener(this)
+            customDialog.showDialog(childFragmentManager)
 
         }
     }
@@ -147,14 +138,9 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        cameraExecutor.shutdown()
-    }
 
 
     private fun setupAdapter() {
-//                listener lambda function to pass to the adapter
         myAdapter = UsersListAdapter({ item: ListItem, position: Int ->
             item.isExpanded = !item.isExpanded
             myAdapter.notifyItemChanged(position)
@@ -164,30 +150,13 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
         })
     }
 
-//    private fun startCamera() {
-//        val preview = Preview.Builder().build().also {
-//            it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
-//        }
-//        photoTaker.setupCamera(preview)
-//
-//    }
+
 
     private fun setupButtonListener() {
-//        binding.buttonCaptureImage.setOnClickListener {
-//            takePhoto()
-//        }
+
     }
 
-//    private fun takePhoto() {
-//        photoTaker.takePhoto({ e ->
-//            Log.e("Image capture error", "Error: $e")
-//        }) { imageUri ->
-//            capturedImageUri = imageUri
-//            val customDialog = TitleDialogFragment()
-//            customDialog.setInputDialogListener(this)
-//            customDialog.showDialog(childFragmentManager)
-//        }
-//    }
+
 
     private fun createAndAddListItemWithImage(title: String, details: String) {
 
@@ -199,9 +168,9 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
         )
         myList?.add(item)
         myAdapter.submitList(myList)
-
+        Log.d("item", myList.toString())
+        myList?.let { myAdapter.notifyItemChanged(it.size) }
     }
-
 
     override fun onInputConfirmed(title: String, details: String) {
         createAndAddListItemWithImage(title, details)
@@ -214,9 +183,9 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             this.adapter = myAdapter
 
-//        stops the list item from flickering when click
-            (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
-                false
+////        stops the list item from flickering when click
+//            (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
+//                false
 
         }
     }
@@ -240,9 +209,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
                     requireContext(), "Permission not granted.", Toast.LENGTH_SHORT
                 ).show()
             }
-//            else {
-//                startCamera()
-//            }
         }
 
     }
