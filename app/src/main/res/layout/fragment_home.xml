@@ -15,47 +15,88 @@
         android:layout_height="match_parent"
         tools:context="com.example.logintask1.ui.home.HomeFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" >
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonCaptureImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/google_signin_button"
-                android:padding="20dp"
-                android:text="@string/capture_image"
-                android:textAllCaps="false"
-                app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
-                app:layout_constraintEnd_toEndOf="@+id/viewFinder"
-                app:layout_constraintStart_toStartOf="@+id/viewFinder" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <androidx.camera.view.PreviewView
-                android:id="@+id/viewFinder"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/recyclerViewUsers"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0">
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/openCameraToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.camera.view.PreviewView>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewUsers">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewUsers"
-                android:layout_width="0dp"
-                android:layout_height="400dp"
-                app:items="@{viewModel.homeState.imagesList}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent">
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonCaptureImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/google_signin_button"
+                        android:padding="20dp"
+                        android:text="@string/capture_image"
+                        android:textAllCaps="false"
+                        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
+                        app:layout_constraintEnd_toEndOf="@+id/viewFinder"
+                        app:layout_constraintStart_toStartOf="@+id/viewFinder" />
 
-            </androidx.recyclerview.widget.RecyclerView>
+                    <androidx.camera.view.PreviewView
+                        android:id="@+id/viewFinder"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.camera.view.PreviewView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewUsers"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/openCameraToolbar">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewUsers"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
     </FrameLayout>
 </layout>

@@ -1,6 +1,7 @@
 package com.example.logintask1.data
 
 import android.net.Uri
+import com.example.logintask1.ui.home.HomeUiModel
 
 data class ListItem(
 //   remove the id
@@ -12,3 +13,7 @@ data class ListItem(
 //    replace with binding adapter
     var isExpanded: Boolean = false
 )
+
+fun ListItem.toUiModel() : HomeUiModel{
+    return HomeUiModel(title, imageUri, details, isExpanded)
+}

@@ -33,7 +33,6 @@ class SignupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentSignupBinding.bind(view)
         with(binding) {
             viewModel = model
             lifecycleOwner = this@SignupFragment

@@ -28,7 +28,7 @@ class AuthActivity : AppCompatActivity() {
         binding.tabLayout.addOnTabSelectedListener(tabSelectListener)
     }
 
-    //TODO you need to integrate the tab layout directly with navController
+    //TODO: you need to integrate the tab layout directly with navController
     // use viewPager 2
 
 

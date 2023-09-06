@@ -1,21 +1,20 @@
 package com.example.logintask1.ui.home.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.bumptech.glide.Glide
 import com.example.logintask1.data.ListItem
+import com.example.logintask1.data.toUiModel
 import com.example.logintask1.databinding.ListItemBinding
 
 
-
 class UsersListAdapter(
-    private val clickListener: (ListItem, Int) -> Unit
-): ListAdapter<ListItem, UsersListAdapter.ListItemViewHolder>(DiffCallback()) {
+    private val cardClickListener: (ListItem, Int) -> Unit,
+    private val imageClickListener: (ListItem) -> Unit,
+) : ListAdapter<ListItem, UsersListAdapter.ListItemViewHolder>(DiffCallback()) {
     private lateinit var binding: ListItemBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
@@ -26,22 +25,18 @@ class UsersListAdapter(
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.bind(currentItem)
-        holder.itemView.setOnClickListener { clickListener(currentItem, position) }
+        with(binding) {
+            root.setOnClickListener { cardClickListener(currentItem, position) }
+            imageViewThumbnail.setOnClickListener { imageClickListener(currentItem) }
+        }
     }
 
     class ListItemViewHolder(private val binding: ListItemBinding) : ViewHolder(binding.root) {
         fun bind(item: ListItem) {
-            with(binding){
+            with(binding) {
                 uiModel = item.toUiModel()
             }
-//            set the text for each item
-//            Glide.with(binding.root)
-//                .load(item.imageUri)
-//                .into(binding.imageViewThumbnail)
-//            binding.textViewTitle.text = item.title
-//            binding.textViewDetails.text = item.details
-////            toggle visibility of details when expanded or collapsed
-//            binding.textViewDetails.visibility = if (item.isExpanded) View.VISIBLE else View.GONE
+
         }
     }
 }
