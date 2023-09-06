@@ -1,56 +1,72 @@
 package com.example.logintask1.ui.auth.signup
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 
 class SignupViewModel : ViewModel() {
 
+    private val _emailError = MutableLiveData<String?>()
+    private val _passwordError = MutableLiveData<String?>()
+    private val _confirmPasswordError = MutableLiveData<String?>()
 
-    var email: MutableLiveData<String?> = MutableLiveData()
+    // data to be set in the view
+    val emailError: LiveData<String?> = _emailError
+    val passwordError: LiveData<String?> = _passwordError
+    val confirmPasswordError: LiveData<String?> = _confirmPasswordError
+
+    // data coming from view
     var password: MutableLiveData<String?> = MutableLiveData()
+    var email: MutableLiveData<String?> = MutableLiveData()
     var confirmPassword: MutableLiveData<String?> = MutableLiveData()
 
-
-    val emailError = email.map {
-
-            validateEmail(it)
-
+    init {
+        email.observeForever { validateEmail() }
+        password.observeForever { validatePassword() }
+        confirmPassword.observeForever { validateConfirmPassword() }
     }
 
-    val passwordError = password.map {
-
-        validatePassword(it)
-
-    }
-
-    val confirmPasswordError = confirmPassword.map{
-        validateConfirmPassword(it)
-
-    }
-
-
-    private fun validateEmail(email: String?): String? {
+    fun validateEmail(): Boolean {
         val emailRegex = Regex(".+@.+(.com)$")
-        if (!emailRegex.matches(email.toString())) {
-            return "Please enter a valid email"
+        val isValid = emailRegex.matches(email.value.toString()) || email.value?.isEmpty() ?: true
+        if (!isValid) {
+            Log.d("error", "incorrect email format")
+            _emailError.value = "Incorrect email format"
+        } else {
+            Log.d("validation", emailRegex.matches(email.value.toString()).toString())
+            _emailError.value = null
         }
-        return null
+        return isValid && email.value?.isEmpty() == false
     }
 
-    private fun validatePassword(password: String?): String? {
-
-        if (password.toString().length < 8) {
-            return "password must have 8 or more characters"
-
+    fun validatePassword(): Boolean {
+        val isValid =
+            (password.value.toString().length in 8..12) || password.value?.isEmpty() ?: true
+        if (!isValid) {
+            _passwordError.value = "Password must be between 8 and 12 characters"
+        } else {
+            _passwordError.value = null
         }
-        return null
+        return isValid && password.value?.isEmpty() == false
     }
 
-    private fun validateConfirmPassword(confirmPassword: String?): String? {
-        if (confirmPassword.toString() != password.value.toString()) {
-            return "passwords don't match"
+    fun validateConfirmPassword(): Boolean {
+        return if (confirmPassword.value.toString() != password.value.toString()) {
+            _confirmPasswordError.value = "Passwords don't match"
+            false
+        } else {
+            _confirmPasswordError.value = null
+            true
         }
-        return null
     }
+
+    fun validateFields(): Boolean {
+        val emailCondition = validateEmail()
+        val passwordCondition = validatePassword()
+        val confirmPasswordCondition = validateConfirmPassword()
+        return emailCondition && passwordCondition && confirmPasswordCondition
+    }
+
+
 }

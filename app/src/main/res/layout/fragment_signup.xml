@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/welcome_text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/welcome_signup"
@@ -124,8 +124,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginBottom="48dp"
-                app:helperText="@{viewModel.emailError}"
-                app:helperTextTextColor="@color/warning"
+                errorMessage="@{viewModel.emailError}"
+                validateInput="@{viewModel.validateEmail()}"
                 app:layout_constraintBottom_toTopOf="@+id/password"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/email"
@@ -145,7 +145,6 @@
                 android:id="@+id/password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginBottom="1dp"
                 android:text="@string/password"
                 app:layout_constraintBottom_toTopOf="@+id/signupPasswordContainer"
@@ -153,15 +152,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/emailContainer" />
 
             <com.google.android.material.textfield.TextInputLayout
-
                 android:id="@+id/signupPasswordContainer"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginBottom="47dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="12"
-                app:helperText="@{viewModel.passwordError}"
-                app:helperTextTextColor="@color/warning"
+                errorMessage="@{viewModel.passwordError}"
+                validateInput="@{viewModel.validatePassword()}"
                 app:layout_constraintBottom_toTopOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/password"
@@ -194,6 +192,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginBottom="48dp"
+                errorMessage="@{viewModel.confirmPasswordError}"
+                validateInput="@{viewModel.validateConfirmPassword()}"
                 app:helperTextTextColor="@color/warning"
                 app:layout_constraintBottom_toTopOf="@+id/signinButton"
                 app:layout_constraintEnd_toEndOf="parent"

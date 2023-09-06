@@ -84,12 +84,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailContainer"
+                errorMessage="@{viewModel.emailError}"
+                validateInput="@{viewModel.validateEmail()}"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="1dp"
-                app:helperTextEnabled="true"
-                app:helperTextTextColor="@color/warning"
-                app:helperText="@{viewModel.emailError}"
+                app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/email"
                 app:layout_constraintTop_toBottomOf="@+id/email">
@@ -108,7 +108,6 @@
                 android:id="@+id/password_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginTop="48dp"
                 android:text="@string/password"
                 app:layout_constraintStart_toStartOf="parent"
@@ -116,12 +115,13 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordContainer"
+                errorMessage="@{viewModel.passwordError}"
+                validateInput="@{viewModel.validatePassword()}"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="12"
                 app:helperTextTextColor="@color/warning"
-                app:helperText="@{viewModel.passwordError}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/password_hint"
                 app:layout_constraintTop_toBottomOf="@+id/password_hint"
