@@ -18,17 +18,7 @@ class HomeViewModel : ViewModel() {
     val homeState: LiveData<HomeUiModel> = _homeState
     val isExpanded: LiveData<Boolean> = _isExpanded
 
-//    fun addImage(imageUri: Uri, title: String, details: String?) {
-//
-//        // Get the current list from the LiveData
-//
-//        val currentList = homeState.value?.imagesList ?: emptyList()
-//        val id = Random().nextInt(200)
-//        val listItem = ListItem(id, title, imageUri, details)
-//        val newList = currentList + listItem
-//        _homeState.value = HomeUiModel(newList)
-//
-//    }
+
 
 
 }

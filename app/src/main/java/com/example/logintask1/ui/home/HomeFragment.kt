@@ -164,7 +164,8 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
             imageUri = capturedImageUri,
             title = title,
             details = details,
-            id = Random().nextInt(200)
+            id = Random().nextInt(200),
+            thumbnail = imageThumbnail!!
         )
         myList?.add(item)
         myAdapter.submitList(myList)

@@ -1,5 +1,6 @@
 package com.example.logintask1.util
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.view.View
@@ -32,6 +33,12 @@ object BindingAdapters {
         Glide.with(context)
                 .load(imageUri)
                 .into(this)
+    }
+
+    @BindingAdapter("thumbnail")
+    @JvmStatic
+    fun ImageView.setImageThumbnail(imageBitmap: Bitmap){
+        this.setImageBitmap(imageBitmap)
     }
 
     @BindingAdapter("tvText")

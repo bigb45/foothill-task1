@@ -48,7 +48,7 @@
 
             <ImageView
                 android:id="@+id/imageViewThumbnail"
-                app:imageSource="@{uiModel.imageUri}"
+                app:thumbnail="@{uiModel.thumbnail}"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:scaleType="centerCrop"
