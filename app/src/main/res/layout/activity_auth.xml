@@ -30,20 +30,30 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-
-        <fragment
-
-            android:id="@+id/fragmentContainerView"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/authPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-            app:navGraph="@navigation/auth_navigation_graph"
-            tools:layout="@layout/fragment_signin" />
+            app:layout_constraintVertical_bias="1.0" />
+
+        <!--        <fragment-->
+
+<!--            android:id="@+id/fragmentContainerView"-->
+<!--            android:name="androidx.navigation.fragment.NavHostFragment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:defaultNavHost="true"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tabLayout"-->
+<!--            app:navGraph="@navigation/auth_navigation_graph"-->
+<!--            tools:layout="@layout/fragment_signin" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

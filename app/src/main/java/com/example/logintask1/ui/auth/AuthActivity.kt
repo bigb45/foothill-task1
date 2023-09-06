@@ -1,21 +1,26 @@
 package com.example.logintask1.ui.auth
 
+import android.content.res.Resources.NotFoundException
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.example.logintask1.R
 import com.example.logintask1.databinding.ActivityAuthBinding
-import com.example.logintask1.ui.auth.signin.SigninFragmentDirections
-import com.example.logintask1.ui.auth.signup.SignupFragmentDirections
-import com.google.android.material.tabs.TabLayout
+import com.example.logintask1.ui.auth.signin.SigninFragment
+import com.example.logintask1.ui.auth.signup.SignupFragment
+import com.google.android.material.tabs.TabLayoutMediator
 
+private const val PAGE_COUNT = 2
 
-class AuthActivity : AppCompatActivity() {
+class AuthActivity : FragmentActivity() {
     private lateinit var binding: ActivityAuthBinding
-    private lateinit var navController: NavController
 
+//        private lateinit var navController: NavController
+    private lateinit var pager: ViewPager2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_auth)
@@ -23,34 +28,46 @@ class AuthActivity : AppCompatActivity() {
     }
 
 
-    private fun initView(){
-        navController = findNavController(R.id.fragmentContainerView)
-        binding.tabLayout.addOnTabSelectedListener(tabSelectListener)
+    private fun initView() {
+//        navController = findNavController(R.id.)
+        with(binding) {
+//            tabLayout.addOnTabSelectedListener(tabSelectListener)
+            this@AuthActivity.pager = authPager
+        }
+        pager.adapter = PagerAdapter(this)
+        TabLayoutMediator(binding.tabLayout, pager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Sign in"
+                1 -> "Sign up"
+                else -> {""}
+            }
+
+            }.attach()
+
     }
+
 
     //TODO: you need to integrate the tab layout directly with navController
     // use viewPager 2
 
 
-    private val tabSelectListener =  object: TabLayout.OnTabSelectedListener {
-
-        override fun onTabSelected(tab: TabLayout.Tab?) {
-            when (tab?.position) {
-                1 -> {
-                    val action = SigninFragmentDirections.actionSigninFragmentToSignupFragment()
-                    navController.navigate(action)
-                }
-                0 -> {
-                    val action = SignupFragmentDirections.actionSignupFragmentToSigninFragment()
-                    navController.navigate(action)
-                }
-            }
-
+    private inner class PagerAdapter(fragmentActivity: FragmentActivity) :
+        FragmentStateAdapter(fragmentActivity) {
+        override fun getItemCount(): Int {
+            return PAGE_COUNT
         }
 
-        override fun onTabReselected(tab: TabLayout.Tab?) {}
+        override fun createFragment(position: Int): Fragment {
+            val fragment = when (position) {
+                1 -> SignupFragment()
 
-        override fun onTabUnselected(tab: TabLayout.Tab?) {}
+                0 -> SigninFragment()
+                else -> {
+                    throw NotFoundException("Cannot find fragment at position $position")
+                }
+            }
+            return fragment
+        }
 
     }
 
