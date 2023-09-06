@@ -1,5 +1,6 @@
 package com.example.logintask1.ui.home
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -27,6 +28,7 @@ import com.example.logintask1.R
 import com.example.logintask1.data.ListItem
 import com.example.logintask1.databinding.FragmentHomeBinding
 import com.example.logintask1.ui.home.adapters.UsersListAdapter
+import java.lang.Exception
 
 import java.util.Random
 
@@ -93,7 +95,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     private fun dispatchCaptureIntent() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         val values = ContentValues()
-        values.put(MediaStore.MediaColumns.DISPLAY_NAME, "myimage.jpg")
         values.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
         capturedImageUri = requireContext().contentResolver.insert(
@@ -140,10 +141,14 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
 
 
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setupAdapter() {
         myAdapter = UsersListAdapter({ item: ListItem, position: Int ->
             item.isExpanded = !item.isExpanded
-            myAdapter.notifyItemChanged(position)
+            Log.d("item", item.isExpanded.toString() + " " + item.title)
+//            (cut my life into pieces) this is my last resort
+            myAdapter.notifyDataSetChanged()
+
         }, { item ->
             val imageDialogFragment = FullImageDialog.newInstance(item.imageUri!!)
             imageDialogFragment.show(childFragmentManager, "Image_dialog")
@@ -169,7 +174,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
         )
         myList?.add(item)
         myAdapter.submitList(myList)
-        Log.d("item", myList.toString())
+//        Log.d("item", myList.toString())
         myList?.let { myAdapter.notifyItemChanged(it.size) }
     }
 

@@ -1,6 +1,7 @@
 package com.example.logintask1.ui.home.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
@@ -26,7 +27,7 @@ class UsersListAdapter(
         val currentItem = getItem(position)
         holder.bind(currentItem)
         with(binding) {
-            root.setOnClickListener { cardClickListener(currentItem, position) }
+            card.setOnClickListener { cardClickListener(currentItem, position)}
             imageViewThumbnail.setOnClickListener { imageClickListener(currentItem) }
         }
     }
@@ -39,6 +40,7 @@ class UsersListAdapter(
 
         }
     }
+
 }
 
 

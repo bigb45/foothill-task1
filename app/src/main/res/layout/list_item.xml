@@ -24,16 +24,14 @@
             android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="29dp"
-            app:tvText="@{uiModel.title}"
+            android:layout_marginStart="10dp"
             android:textColor="@android:color/black"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout3"
-            app:layout_constraintTop_toTopOf="@+id/constraintLayout3"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginEnd="10dp"
+            app:layout_goneMarginStart="10dp"
+            app:tvText="@{uiModel.title}" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/constraintLayout3"
@@ -48,26 +46,23 @@
 
             <ImageView
                 android:id="@+id/imageViewThumbnail"
-                app:thumbnail="@{uiModel.thumbnail}"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:scaleType="centerCrop"
-                 />
+                app:thumbnail="@{uiModel.thumbnail}" />
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/textViewDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"
-            app:tvText="@{uiModel.details}"
+            android:layout_marginTop="10dp"
             android:textSize="20sp"
             app:expand="@{uiModel.isExpanded}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            app:tvText="@{uiModel.details}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
