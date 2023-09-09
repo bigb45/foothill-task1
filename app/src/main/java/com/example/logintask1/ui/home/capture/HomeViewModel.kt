@@ -1,12 +1,8 @@
-package com.example.logintask1.ui.home
+package com.example.logintask1.ui.home.capture
 
-import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.logintask1.data.ListItem
-import java.util.Random
 
 class HomeViewModel : ViewModel() {
     //     the variable that is changed in the model (or by the ui if using 2-way data-binding)

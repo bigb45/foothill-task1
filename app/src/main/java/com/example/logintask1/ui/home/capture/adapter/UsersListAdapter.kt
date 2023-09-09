@@ -1,9 +1,7 @@
-package com.example.logintask1.ui.home.adapters
+package com.example.logintask1.ui.home.capture.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -15,7 +13,7 @@ import com.example.logintask1.databinding.ListItemBinding
 class UsersListAdapter(
     private val cardClickListener: (ListItem, Int) -> Unit,
     private val imageClickListener: (ListItem) -> Unit,
-) : ListAdapter<ListItem, UsersListAdapter.ListItemViewHolder>(DiffCallback()) {
+) : ListAdapter<ListItem, UsersListAdapter.ListItemViewHolder>(UserListDiffCallback()) {
     private lateinit var binding: ListItemBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
@@ -44,7 +42,7 @@ class UsersListAdapter(
 }
 
 
-class DiffCallback : DiffUtil.ItemCallback<ListItem>() {
+class UserListDiffCallback : DiffUtil.ItemCallback<ListItem>() {
     override fun areItemsTheSame(oldItem: ListItem, newItem: ListItem): Boolean {
         return oldItem.id == newItem.id
     }

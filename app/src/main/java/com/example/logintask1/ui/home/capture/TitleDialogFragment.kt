@@ -1,12 +1,10 @@
-package com.example.logintask1.ui.home
+package com.example.logintask1.ui.home.capture
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import com.bumptech.glide.Glide
 import com.example.logintask1.R
 import com.example.logintask1.databinding.CustomAlertDialogBinding
 
