@@ -157,9 +157,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
 
 
     private fun setupButtonListener() {
-        binding.button.setOnClickListener {
-            findNavController().navigate(R.id.fragment_posts)
-        }
     }
 
 
@@ -189,11 +186,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             this.adapter = myAdapter
-
-////        stops the list item from flickering when click
-//            (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
-//                false
-
         }
     }
 

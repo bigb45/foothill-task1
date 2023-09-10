@@ -29,24 +29,22 @@ object BindingAdapters {
     @BindingAdapter("imageSource")
     @JvmStatic
     fun ImageView.setImageSource(imageSource: Uri) {
-        imageSource.let {  Glide.with(context)
-            .load(imageSource)
-            .into(this)
-            }
+        imageSource.let {
+            Glide.with(context).load(imageSource).into(this)
+        }
     }
 
 
+    @BindingAdapter("thumbnail")
+    @JvmStatic
+    fun ImageView.setImageThumbnail(imageBitmap: Bitmap) {
+        this.setImageBitmap(imageBitmap)
+    }
 
-@BindingAdapter("thumbnail")
-@JvmStatic
-fun ImageView.setImageThumbnail(imageBitmap: Bitmap) {
-    this.setImageBitmap(imageBitmap)
-}
-
-@BindingAdapter("tvText")
-@JvmStatic
-fun TextView.setTvText(newText: String) {
-    this.text = newText
-}
+    @BindingAdapter("tvText")
+    @JvmStatic
+    fun TextView.setTvText(newText: String) {
+        this.text = newText
+    }
 }
 

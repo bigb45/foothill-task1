@@ -1,5 +1,6 @@
 package com.example.logintask1.ui.home.userpost
 
+import android.net.Uri
 import com.google.gson.annotations.SerializedName
 import retrofit2.http.Url
 import java.util.Date
@@ -12,5 +13,7 @@ data class PostsUiModel(
     val formattedDate: String,
     val likes: Int,
 //    val avatarUrl: Url?,
-    val isLiked: Boolean
+    val isLiked: Boolean,
+    val avatarUrl: Uri,
+    val isSaved: Boolean
 )

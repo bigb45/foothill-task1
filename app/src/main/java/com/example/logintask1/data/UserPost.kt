@@ -1,5 +1,7 @@
 package com.example.logintask1.data
 
+import android.util.Log
+import androidx.core.net.toUri
 import com.example.logintask1.ui.home.userpost.PostsUiModel
 import com.google.gson.annotations.SerializedName
 import retrofit2.http.Url
@@ -16,11 +18,14 @@ data class UserPost(
     @SerializedName("createdAt")
     val createDate: Date,
     val likes: Int,
-    val isLiked: Boolean
+    val avatarUrl: String,
+    val isLiked: Boolean,
+    val isSaved: Boolean
 )
 
 fun UserPost.toUiModel(): PostsUiModel {
     val formattedDate = createDate.getCustomPattern()
+    Log.d("url", avatarUrl)
     return PostsUiModel(
         postId,
         postTitle,
@@ -28,7 +33,9 @@ fun UserPost.toUiModel(): PostsUiModel {
         userName,
         formattedDate,
         likes,
-        isLiked
+        isLiked,
+        avatarUrl.toUri(),
+        isSaved
     )
 }
 

@@ -87,10 +87,11 @@
 
                     <ImageView
                         android:id="@+id/imageViewAvatar"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:background="#A68585"
                         android:contentDescription="@string/avatar_description"
+                        app:imageSource="@{model.avatarUrl}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:srcCompat="@drawable/ic_launcher_foreground" />
@@ -107,7 +108,8 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/cardViewAvatar"
                     app:layout_constraintStart_toEndOf="@+id/cardViewAvatar"
-                    app:layout_constraintTop_toTopOf="@+id/cardViewAvatar" />
+                    app:layout_constraintTop_toTopOf="@+id/cardViewAvatar"
+                    app:layout_constraintVertical_bias="0.25" />
 
                 <TextView
                     android:id="@+id/textViewDate"
