@@ -1,5 +1,6 @@
 package com.example.logintask1.network
 
+import androidx.camera.core.ImageProcessor.Response
 import retrofit2.Call
 import com.example.logintask1.data.UserPost
 import retrofit2.Response
@@ -7,6 +8,7 @@ import retrofit2.http.GET
 
 interface UserPostApiInterface {
 
+    //TODO should be suspended
     @GET("posts")
-    fun getPosts(): Call<List<UserPost>>
+    suspend fun getPosts(): List<UserPost>
 }

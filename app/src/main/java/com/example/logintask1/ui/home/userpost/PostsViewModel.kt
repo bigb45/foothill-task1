@@ -19,6 +19,8 @@ class PostsViewModel : ViewModel() {
     val posts: LiveData<List<UserPost>> = _posts
     private val userPostsService: UserPostApiInterface = createPostsService()
 
+    //TODO(move the create post service to a singleton object that should handle all service logic)
+
     private fun createPostsService(): UserPostApiInterface {
         return Retrofit
             .Builder()
@@ -29,24 +31,20 @@ class PostsViewModel : ViewModel() {
     }
 
     init {
+        //TODO you need to handle the error
         viewModelScope.launch {
            makeGetPostsRequest()
+        }.invokeOnCompletion {
+
         }
     }
 
     private suspend fun makeGetPostsRequest(){
-        try {
-            val response = withContext(Dispatchers.IO) {
-                userPostsService.getPosts().execute()
-            }
-            if (response.isSuccessful) {
-                _posts.postValue(response.body())
-            } else {
-                Log.e("error", "Error while fetching data from remote API.")
-            }
-        } catch (e: Exception) {
-            Log.e("error", e.message.toString())
-        }
+        userPostsService.getPosts()
+    }
+
+    fun likePost(post:UserPost, position:Int){
+        //TODO implement like post function
     }
 
     val likeClickListener = {

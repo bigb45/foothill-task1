@@ -13,55 +13,48 @@ import com.example.logintask1.ui.home.userpost.adapter.PostListAdapter
 const val BASE_URL = "https://64fce528605a026163aedf15.mockapi.io/"
 
 class PostsFragment : Fragment(), PutRequestInterface {
-    companion object {
-        fun newInstance() = PostsFragment()
-    }
 
     private var viewModel = PostsViewModel()
     private lateinit var binding: FragmentPostsBinding
-    private val adapter = PostListAdapter { userPost, i ->
-        viewModel.likeClickListener(
-            userPost,
-            i
-        )
-
-    }
+    private lateinit var adapter: PostListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPostsBinding.inflate(inflater, container, false)
-        with(binding) {
-            recyclerViewPosts.adapter = this@PostsFragment.adapter
-            recyclerViewPosts.layoutManager =
-                LinearLayoutManager(this@PostsFragment.context, LinearLayoutManager.VERTICAL, false)
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initView()
+    }
+
+    private fun initView() {
+        adapter = PostListAdapter { userPost, index ->
+            viewModel.likePost(post = userPost, position = index)
+        }
+
+        with(binding.recyclerViewPosts) {
+            adapter = this@PostsFragment.adapter
+            //TODO add layout manager through the xml file
+            layoutManager =
+                LinearLayoutManager(this@PostsFragment.context, LinearLayoutManager.VERTICAL, false)
+        }
+
         viewModel.posts.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
-//            d("user", posts[0].toString())
         }
+
 
     }
 
-//    private suspend fun makePutRequest(){
-//        try{
-//            val response = withContext(Dispatchers.IO){
-//
-////                userPostsService.putPost().execute
-//            }
-//        }catch (e: Exception){
-//            Log.e("error", e.message.toString())
-//        }
-//    }
-
-
     override fun updatePost(postId: Int) {
+        //TODO update post
+    }
 
+    companion object {
+        fun newInstance() = PostsFragment()
     }
 
 }
