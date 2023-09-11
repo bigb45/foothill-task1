@@ -3,10 +3,12 @@ package com.example.logintask1.util
 import android.graphics.Bitmap
 import android.net.Uri
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.example.logintask1.data.PostButtonStateIcons
 import com.google.android.material.textfield.TextInputLayout
 
 object BindingAdapters {
@@ -34,6 +36,12 @@ object BindingAdapters {
         }
     }
 
+    @BindingAdapter(value = ["buttonIcons", "isFilled"], requireAll = true)
+    @JvmStatic
+    fun Button.setButtonIcons(buttonIcons: PostButtonStateIcons, isFilled: Boolean){
+        val icon = if(isFilled) buttonIcons.defaultDrawableResId else buttonIcons.filledDrawableResId
+        this.setBackgroundResource(icon)
+    }
 
     @BindingAdapter("thumbnail")
     @JvmStatic

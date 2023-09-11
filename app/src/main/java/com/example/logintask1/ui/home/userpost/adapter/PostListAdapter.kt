@@ -8,18 +8,19 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.logintask1.data.UserPost
 import com.example.logintask1.data.toUiModel
 import com.example.logintask1.databinding.PostBinding
-import okhttp3.internal.userAgent
 
 
-class PostListAdapter :
-    ListAdapter<UserPost, PostListAdapter.PostListViewHolder>(PostListDiffCallback()) {
+class PostListAdapter(
+    private val likeClickListener: (UserPost, Int) -> Unit,
+//    saveClickListener: (UserPost, Int) -> Unit
+) : ListAdapter<UserPost, PostListAdapter.PostListViewHolder>(PostListDiffCallback()) {
     private lateinit var binding: PostBinding
+
     class PostListViewHolder(private val binding: PostBinding) : ViewHolder(binding.root) {
-        fun bind(currentPost: UserPost){
-            with(binding){
+        fun bind(currentPost: UserPost) {
+            with(binding) {
                 model = currentPost.toUiModel()
             }
-
         }
     }
 
@@ -30,8 +31,19 @@ class PostListAdapter :
 
     override fun onBindViewHolder(holder: PostListViewHolder, position: Int) {
         val currentPost = getItem(position)
+
+        with(binding) {
+            buttonLike.setOnClickListener {
+                likeClickListener(currentPost, holder.adapterPosition)
+            }
+
+        }
         holder.bind(currentPost)
     }
+
+
+
+
 }
 
 

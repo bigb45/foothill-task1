@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.core.net.toUri
 import com.example.logintask1.ui.home.userpost.PostsUiModel
 import com.google.gson.annotations.SerializedName
-import retrofit2.http.Url
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

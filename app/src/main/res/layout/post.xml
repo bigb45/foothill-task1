@@ -13,11 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBackground"
-        android:padding="10dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,24 +31,21 @@
 
                 <Button
                     android:id="@+id/buttonLike"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-
-
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="8dp"
-
-                    android:background="@drawable/outline_bookmark_border_24"
+                    app:buttonIcons="@{model.likeButtonStateIcons}"
+                    app:isFilled="@{model.isLiked}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/buttonBookmark"
                     app:layout_constraintTop_toTopOf="@+id/buttonBookmark" />
 
                 <Button
                     android:id="@+id/buttonBookmark"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-
-
-                    android:background="@drawable/round_favorite_border_24"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:buttonIcons="@{model.saveButtonStateIcons}"
+                    app:isFilled="@{model.isSaved}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -67,7 +65,7 @@
                 <TextView
                     android:id="@+id/textViewPostBody"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
@@ -120,6 +118,16 @@
                     android:text="@{model.formattedDate}"
                     app:layout_constraintStart_toStartOf="@+id/textViewUsername"
                     app:layout_constraintTop_toBottomOf="@+id/textViewUsername" />
+
+                <TextView
+                    android:id="@+id/textViewLikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@{model.likes}"
+                    app:layout_constraintBottom_toBottomOf="@+id/buttonLike"
+                    app:layout_constraintStart_toEndOf="@+id/buttonLike"
+                    app:layout_constraintTop_toTopOf="@+id/buttonLike" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

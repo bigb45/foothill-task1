@@ -178,6 +178,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
 
     override fun onInputConfirmed(title: String, details: String) {
         createAndAddListItemWithImage(title, details)
+        binding.
     }
 
     private fun setupRecyclerView() {

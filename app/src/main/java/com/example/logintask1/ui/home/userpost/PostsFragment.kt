@@ -9,16 +9,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.logintask1.databinding.FragmentPostsBinding
 import com.example.logintask1.ui.home.userpost.adapter.PostListAdapter
 
+
 const val BASE_URL = "https://64fce528605a026163aedf15.mockapi.io/"
 
-class PostsFragment : Fragment() {
+class PostsFragment : Fragment(), PutRequestInterface {
     companion object {
         fun newInstance() = PostsFragment()
     }
 
     private var viewModel = PostsViewModel()
     private lateinit var binding: FragmentPostsBinding
-    private val adapter = PostListAdapter()
+    private val adapter = PostListAdapter { userPost, i ->
+        viewModel.likeClickListener(
+            userPost,
+            i
+        )
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,16 +37,31 @@ class PostsFragment : Fragment() {
             recyclerViewPosts.layoutManager =
                 LinearLayoutManager(this@PostsFragment.context, LinearLayoutManager.VERTICAL, false)
         }
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.posts.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
+//            d("user", posts[0].toString())
         }
 
     }
 
+//    private suspend fun makePutRequest(){
+//        try{
+//            val response = withContext(Dispatchers.IO){
+//
+////                userPostsService.putPost().execute
+//            }
+//        }catch (e: Exception){
+//            Log.e("error", e.message.toString())
+//        }
+//    }
+
+
+    override fun updatePost(postId: Int) {
+
+    }
 
 }

@@ -70,4 +70,5 @@
     <string name="open_camera">Open camera</string>
     <string name="load_posts">Load Posts</string>
     <string name="avatar_description">user avatar</string>
+    <string name="add_image_hint">Start by adding an Image</string>
 </resources>
