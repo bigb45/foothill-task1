@@ -22,6 +22,7 @@
             app:titleTextColor="@color/white" />
 
         <androidx.recyclerview.widget.RecyclerView
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:id="@+id/recyclerViewPosts"
             android:layout_width="match_parent"
             android:layout_height="0dp"

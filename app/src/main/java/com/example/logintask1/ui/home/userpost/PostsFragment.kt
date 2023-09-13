@@ -10,9 +10,8 @@ import com.example.logintask1.databinding.FragmentPostsBinding
 import com.example.logintask1.ui.home.userpost.adapter.PostListAdapter
 
 
-const val BASE_URL = "https://64fce528605a026163aedf15.mockapi.io/"
 
-class PostsFragment : Fragment(), PutRequestInterface {
+class PostsFragment : Fragment() {
 
     private var viewModel = PostsViewModel()
     private lateinit var binding: FragmentPostsBinding
@@ -31,15 +30,12 @@ class PostsFragment : Fragment(), PutRequestInterface {
     }
 
     private fun initView() {
-        adapter = PostListAdapter { userPost, index ->
-            viewModel.likePost(post = userPost, position = index)
+        adapter = PostListAdapter { post, position ->
+            viewModel.likePost(post, position)
         }
 
         with(binding.recyclerViewPosts) {
             adapter = this@PostsFragment.adapter
-            //TODO add layout manager through the xml file
-            layoutManager =
-                LinearLayoutManager(this@PostsFragment.context, LinearLayoutManager.VERTICAL, false)
         }
 
         viewModel.posts.observe(viewLifecycleOwner) { posts ->
@@ -47,10 +43,6 @@ class PostsFragment : Fragment(), PutRequestInterface {
         }
 
 
-    }
-
-    override fun updatePost(postId: Int) {
-        //TODO update post
     }
 
     companion object {

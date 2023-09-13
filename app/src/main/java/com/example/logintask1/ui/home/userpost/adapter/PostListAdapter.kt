@@ -10,10 +10,7 @@ import com.example.logintask1.data.toUiModel
 import com.example.logintask1.databinding.PostBinding
 
 
-class PostListAdapter(
-    private val likeClickListener: (UserPost, Int) -> Unit,
-//    saveClickListener: (UserPost, Int) -> Unit
-) : ListAdapter<UserPost, PostListAdapter.PostListViewHolder>(PostListDiffCallback()) {
+class PostListAdapter(private val likePost: (UserPost, Int) -> Unit) : ListAdapter<UserPost, PostListAdapter.PostListViewHolder>(PostListDiffCallback()) {
     private lateinit var binding: PostBinding
 
     class PostListViewHolder(private val binding: PostBinding) : ViewHolder(binding.root) {
@@ -34,7 +31,7 @@ class PostListAdapter(
 
         with(binding) {
             buttonLike.setOnClickListener {
-                likeClickListener(currentPost, holder.adapterPosition)
+                likePost(currentPost, holder.adapterPosition)
             }
 
         }

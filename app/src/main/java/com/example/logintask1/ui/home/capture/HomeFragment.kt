@@ -178,14 +178,13 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
 
     override fun onInputConfirmed(title: String, details: String) {
         createAndAddListItemWithImage(title, details)
-        binding.
+        binding.constraintLayoutPlaceholder.visibility = View.GONE
     }
 
     private fun setupRecyclerView() {
 
         binding.recyclerViewUsers.apply {
-            layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
             this.adapter = myAdapter
         }
     }

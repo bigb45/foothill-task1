@@ -5,6 +5,7 @@ import androidx.core.net.toUri
 import com.example.logintask1.ui.home.userpost.PostsUiModel
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Date
 import java.util.Locale
 
@@ -20,7 +21,21 @@ data class UserPost(
     val avatarUrl: String,
     val isLiked: Boolean,
     val isSaved: Boolean
-)
+){
+    companion object{
+        val errorPost =   UserPost(
+            1,
+            "Error while fetching posts",
+            "An unexpected error occurred while fetching posts",
+            "Admin",
+            Date(),
+            0,
+            "",
+            false,
+            isSaved = false
+        )
+    }
+}
 
 fun UserPost.toUiModel(): PostsUiModel {
     val formattedDate = createDate.getCustomPattern()

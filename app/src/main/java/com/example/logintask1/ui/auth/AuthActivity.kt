@@ -47,10 +47,6 @@ class AuthActivity : FragmentActivity() {
     }
 
 
-    //TODO: you need to integrate the tab layout directly with navController
-    // use viewPager 2
-
-
     private inner class PagerAdapter(fragmentActivity: FragmentActivity) :
         FragmentStateAdapter(fragmentActivity) {
         override fun getItemCount(): Int {
