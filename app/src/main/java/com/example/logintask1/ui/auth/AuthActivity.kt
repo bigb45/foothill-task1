@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 private const val PAGE_COUNT = 2
 
+
 class AuthActivity : FragmentActivity() {
     private lateinit var binding: ActivityAuthBinding
 
