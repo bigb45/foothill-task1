@@ -34,13 +34,22 @@ class PostsFragment : Fragment() {
             viewModel.likePost(post, position)
         }
 
-        with(binding.recyclerViewPosts) {
-            adapter = this@PostsFragment.adapter
+        with(binding) {
+            viewModel = this@PostsFragment.viewModel
+            lifecycleOwner = this@PostsFragment
+            recyclerViewPosts.adapter = this@PostsFragment.adapter
+            swipeRefereshLayoutPosts.setOnRefreshListener {
+                this@PostsFragment.viewModel.fetchPosts()
+                adapter.submitList(emptyList())
+                swipeRefereshLayoutPosts.isRefreshing = false
+            }
+
         }
 
         viewModel.posts.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
         }
+
 
 
     }

@@ -1,5 +1,6 @@
 package com.example.logintask1.ui.home.userpost
 
+import android.util.Log.d
 import android.util.Log.e
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +13,13 @@ import kotlinx.coroutines.launch
 
 class PostsViewModel : ViewModel() {
     private val _posts = MutableLiveData<List<UserPost>>()
+    private val _errorMessage = MutableLiveData<String?>()
+    private val _isLoading = MutableLiveData(true)
+
+    val errorMessage: LiveData<String?> = _errorMessage
+    val isLoading: LiveData<Boolean?> = _isLoading
     val posts: LiveData<List<UserPost>> = _posts
+
     private val userPostsService: UserPostApiInterface = ApiServices.getPostsService()
 
 
@@ -22,20 +29,29 @@ class PostsViewModel : ViewModel() {
         fetchPosts()
     }
 
-    private fun fetchPosts(){
-//        TODO: use this function to reload posts on button click
+    fun fetchPosts(){
         viewModelScope.launch {
             try {
+                _isLoading.postValue(true)
+                _errorMessage.postValue(null)
+
                 _posts.postValue(makeGetPostsRequest())
             } catch (e: Exception) {
                 e("error", e.toString())
-                _posts.postValue(
-                    listOf(
-                        UserPost.errorPost
-                    )
-                )
+//                _posts.postValue(
+//                    listOf(
+//                        UserPost.errorPost
+//                    )
+//                )
+                _errorMessage.postValue("An error occurred while loading posts")
+            } finally {
+                _isLoading.postValue(false)
             }
+
         }
+
+
+
     }
     private suspend fun makeGetPostsRequest(): List<UserPost> {
         return userPostsService.getPosts()
