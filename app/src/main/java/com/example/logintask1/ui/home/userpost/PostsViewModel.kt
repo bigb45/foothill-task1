@@ -57,14 +57,14 @@ class PostsViewModel : ViewModel() {
         return userPostsService.getPosts()
     }
 
-    fun likePost(post: UserPost, position: Int) {
+    fun likePost(post: UserPost) {
         val updatedPost = post.copy(
             likes = if (post.isLiked) post.likes - 1 else post.likes + 1,
             isLiked = !post.isLiked
         )
-
+        val position = _posts.value?.indexOfFirst { it.postId == post.postId } ?: 0
         val currentList = _posts.value?.toMutableList() ?: mutableListOf()
-        currentList[position] = updatedPost
+         currentList[position] = updatedPost
         _posts.postValue(currentList)
     }
 

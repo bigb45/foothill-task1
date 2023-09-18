@@ -30,8 +30,8 @@ class PostsFragment : Fragment() {
     }
 
     private fun initView() {
-        adapter = PostListAdapter { post, position ->
-            viewModel.likePost(post, position)
+        adapter = PostListAdapter { post ->
+            viewModel.likePost(post)
         }
 
         with(binding) {
@@ -40,7 +40,6 @@ class PostsFragment : Fragment() {
             recyclerViewPosts.adapter = this@PostsFragment.adapter
             swipeRefereshLayoutPosts.setOnRefreshListener {
                 this@PostsFragment.viewModel.fetchPosts()
-                adapter.submitList(emptyList())
                 swipeRefereshLayoutPosts.isRefreshing = false
             }
 
