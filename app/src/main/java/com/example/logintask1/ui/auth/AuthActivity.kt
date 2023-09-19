@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.logintask1.R
@@ -19,8 +18,6 @@ private const val PAGE_COUNT = 2
 
 class AuthActivity : FragmentActivity() {
     private lateinit var binding: ActivityAuthBinding
-
-//        private lateinit var navController: NavController
     private lateinit var pager: ViewPager2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +27,7 @@ class AuthActivity : FragmentActivity() {
 
 
     private fun initView() {
-//        navController = findNavController(R.id.)
         with(binding) {
-//            tabLayout.addOnTabSelectedListener(tabSelectListener)
             this@AuthActivity.pager = authPager
         }
         pager.adapter = PagerAdapter(this)
@@ -40,10 +35,12 @@ class AuthActivity : FragmentActivity() {
             tab.text = when (position) {
                 0 -> "Sign in"
                 1 -> "Sign up"
-                else -> {""}
+                else -> {
+                    ""
+                }
             }
 
-            }.attach()
+        }.attach()
 
     }
 

@@ -11,12 +11,10 @@ class SignupViewModel : ViewModel() {
     private val _passwordError = MutableLiveData<String?>()
     private val _confirmPasswordError = MutableLiveData<String?>()
 
-    // data to be set in the view
     val emailError: LiveData<String?> = _emailError
     val passwordError: LiveData<String?> = _passwordError
     val confirmPasswordError: LiveData<String?> = _confirmPasswordError
 
-    // data coming from view
     var password: MutableLiveData<String?> = MutableLiveData()
     var email: MutableLiveData<String?> = MutableLiveData()
     var confirmPassword: MutableLiveData<String?> = MutableLiveData()

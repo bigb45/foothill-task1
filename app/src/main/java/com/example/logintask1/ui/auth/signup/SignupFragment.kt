@@ -3,7 +3,6 @@ package com.example.logintask1.ui.auth.signup
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -19,9 +18,7 @@ class SignupFragment : Fragment() {
     private val model: SignupViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_signup, container, false)
         with(binding) {
@@ -30,6 +27,7 @@ class SignupFragment : Fragment() {
         }
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -42,7 +40,7 @@ class SignupFragment : Fragment() {
 
     private fun setupButtonListener() {
         binding.signinButton.setOnClickListener {
-            if(model.validateFields()){
+            if (model.validateFields()) {
                 startHomeActivity()
             }
         }

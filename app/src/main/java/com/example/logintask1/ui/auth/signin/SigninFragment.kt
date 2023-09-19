@@ -18,9 +18,7 @@ class SigninFragment : Fragment() {
     private val model: SigninViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_signin, container, false)
         with(binding) {
@@ -36,19 +34,20 @@ class SigninFragment : Fragment() {
         setupButtonListener()
 
     }
-    private fun setupButtonListener(){
-        binding.signinButton.setOnClickListener{
-            if(model.validateFields()){
+
+    private fun setupButtonListener() {
+        binding.signinButton.setOnClickListener {
+            if (model.validateFields()) {
                 startHomeActivity()
             }
         }
 
         binding.signinButtonGoogle.setOnClickListener {
-           startHomeActivity()
+            startHomeActivity()
         }
     }
 
-    private fun startHomeActivity(){
+    private fun startHomeActivity() {
         val intent = Intent(context, HomeActivity::class.java)
         startActivity(intent)
     }

@@ -7,9 +7,6 @@ import dagger.hilt.android.HiltAndroidApp
 class MyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
-
-        // Perform any app-wide initialization here
-        // Example: Initializing libraries, setting up global configurations, etc.
     }
 
 }

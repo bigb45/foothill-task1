@@ -5,7 +5,6 @@ import androidx.core.net.toUri
 import com.example.logintask1.ui.home.userpost.PostsUiModel
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.Date
 import java.util.Locale
 

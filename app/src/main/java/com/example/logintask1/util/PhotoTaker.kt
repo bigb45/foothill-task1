@@ -2,7 +2,6 @@ package com.example.logintask1.util
 
 import android.content.ContentValues
 import android.content.Context
-import android.media.Image
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
@@ -12,11 +11,11 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.lifecycle.LifecycleOwner
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+// TODO: document this class for later use
 class PhotoTaker(
     private val context: Context,
     private val lifecycleOwner: LifecycleOwner,
@@ -30,7 +29,10 @@ class PhotoTaker(
         onSuccess: (Uri) -> Unit
     ) {
         val imageName =
-            SimpleDateFormat("HH-mm-SS", Locale.US).format(System.currentTimeMillis()) + "image name"
+            SimpleDateFormat(
+                "HH-mm-SS",
+                Locale.US
+            ).format(System.currentTimeMillis()) + "image name"
 
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, imageName)
@@ -58,30 +60,28 @@ class PhotoTaker(
 
     }
 
-    fun setupCamera(preview: Preview){
-        imageCapture =  ImageCapture.Builder().build()
+    fun setupCamera(preview: Preview) {
+        imageCapture = ImageCapture.Builder().build()
 
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
 
         cameraProviderFuture.addListener({
-//            to define the preview use case, we need 3 things:
 
-//        a camera provider
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
 
-
-
-//        and a camera selector
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
-//            unbind previous use case
                 cameraProvider.unbindAll()
 
-//              you need to bind image capture to the camera selector as well as the preview
 
-                cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, preview, imageCapture)
+                cameraProvider.bindToLifecycle(
+                    lifecycleOwner,
+                    cameraSelector,
+                    preview,
+                    imageCapture
+                )
 
 
             } catch (e: Exception) {

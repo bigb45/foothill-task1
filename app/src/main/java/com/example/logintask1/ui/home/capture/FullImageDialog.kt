@@ -13,10 +13,10 @@ import com.example.logintask1.databinding.FragmentFullImageDialogBinding
 import com.example.logintask1.util.BindingAdapters.setImageSource
 
 
-class FullImageDialog: DialogFragment() {
+class FullImageDialog : DialogFragment() {
     private lateinit var binding: FragmentFullImageDialogBinding
 
-    companion object{
+    companion object {
         private const val IMAGE_URI_KEY = "imageUri"
 
         fun newInstance(imageUri: Uri): FullImageDialog {
@@ -30,12 +30,11 @@ class FullImageDialog: DialogFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_full_image_dialog, container, false)
-        val imageUri = arguments?.getString(IMAGE_URI_KEY)?.toUri()?: "".toUri()
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_full_image_dialog, container, false)
+        val imageUri = arguments?.getString(IMAGE_URI_KEY)?.toUri() ?: "".toUri()
         binding.imageView.setImageSource(imageUri)
         return binding.root
 

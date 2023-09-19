@@ -25,7 +25,7 @@ class UsersListAdapter(
         val currentItem = getItem(position)
         holder.bind(currentItem)
         with(binding) {
-            card.setOnClickListener { cardClickListener(currentItem, position)}
+            card.setOnClickListener { cardClickListener(currentItem, position) }
             imageViewThumbnail.setOnClickListener { imageClickListener(currentItem) }
         }
     }

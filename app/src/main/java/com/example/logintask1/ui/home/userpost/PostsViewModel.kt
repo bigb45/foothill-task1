@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logintask1.data.UserPost
 import com.example.logintask1.network.UserPostApiInterface
-import com.example.logintask1.di.ApiServices
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +16,6 @@ class PostsViewModel @Inject constructor(apiService: UserPostApiInterface) : Vie
     private val _posts = MutableLiveData<List<UserPost>>()
     private val _errorMessage = MutableLiveData<String?>()
     private val _isLoading = MutableLiveData(true)
-
 
 
     val errorMessage: LiveData<String?> = _errorMessage
@@ -33,7 +31,9 @@ class PostsViewModel @Inject constructor(apiService: UserPostApiInterface) : Vie
         fetchPosts()
     }
 
-    fun fetchPosts(){
+//    TODO: use request error handler instead of try-catch block
+
+    fun fetchPosts() {
         viewModelScope.launch {
             try {
                 _isLoading.postValue(true)
@@ -42,21 +42,14 @@ class PostsViewModel @Inject constructor(apiService: UserPostApiInterface) : Vie
                 _posts.postValue(makeGetPostsRequest())
             } catch (e: Exception) {
                 e("error", e.toString())
-//                _posts.postValue(
-//                    listOf(
-//                        UserPost.errorPost
-//                    )
-//                )
                 _errorMessage.postValue("An error occurred while loading posts")
             } finally {
                 _isLoading.postValue(false)
             }
 
         }
-
-
-
     }
+
     private suspend fun makeGetPostsRequest(): List<UserPost> {
         return userPostsService.getPosts()
     }
@@ -68,7 +61,7 @@ class PostsViewModel @Inject constructor(apiService: UserPostApiInterface) : Vie
         )
         val position = _posts.value?.indexOfFirst { it.postId == post.postId } ?: 0
         val currentList = _posts.value?.toMutableList() ?: mutableListOf()
-         currentList[position] = updatedPost
+        currentList[position] = updatedPost
         _posts.postValue(currentList)
     }
 

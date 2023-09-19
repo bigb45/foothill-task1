@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.logintask1.data.PostButtonStateIcons
-import com.example.logintask1.util.BindingAdapters.setVisible
 import com.google.android.material.textfield.TextInputLayout
 
 object BindingAdapters {
@@ -41,8 +40,9 @@ object BindingAdapters {
 
     @BindingAdapter(value = ["buttonIcons", "isFilled"])
     @JvmStatic
-    fun Button.setButtonIcons(buttonIcons: PostButtonStateIcons, isFilled: Boolean){
-        val icon = if(isFilled) buttonIcons.defaultDrawableResId else buttonIcons.filledDrawableResId
+    fun Button.setButtonIcons(buttonIcons: PostButtonStateIcons, isFilled: Boolean) {
+        val icon =
+            if (isFilled) buttonIcons.defaultDrawableResId else buttonIcons.filledDrawableResId
         this.setBackgroundResource(icon)
     }
 
@@ -60,21 +60,21 @@ object BindingAdapters {
 
     @BindingAdapter("setLoadingErrorText")
     @JvmStatic
-    fun TextView.setLoadingError(errorText: String?){
-        Log.d("binding error", errorText?:"empty")
+    fun TextView.setLoadingError(errorText: String?) {
+        Log.d("binding error", errorText ?: "empty")
 
         errorText?.let {
             this.text = errorText
             this.visibility = View.VISIBLE
         }
-        if(errorText.isNullOrEmpty()) this.visibility = View.GONE
+        if (errorText.isNullOrEmpty()) this.visibility = View.GONE
 
     }
 
     @BindingAdapter("setIsLoading")
     @JvmStatic
-    fun ProgressBar.setVisible(isVisible: Boolean){
-        this.visibility = if(isVisible) View.VISIBLE else View.GONE
+    fun ProgressBar.setVisible(isVisible: Boolean) {
+        this.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 }
 

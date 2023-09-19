@@ -23,8 +23,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.logintask1.R
 import com.example.logintask1.data.ListItem
 import com.example.logintask1.databinding.FragmentHomeBinding
@@ -49,17 +47,13 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         with(binding) {
-
-//            this line single-handedly caused me 2 days of pain and suffering
             viewModel = this@HomeFragment.viewModel
             lifecycleOwner = this@HomeFragment
         }
 
 
 
-        if (allPermissionsGranted()) {
-//            startCamera()
-        } else {
+        if (!allPermissionsGranted()) {
             requestPermissions()
         }
         return binding.root
@@ -85,7 +79,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
         }
         setupAdapter()
         setupRecyclerView()
-        setupButtonListener()
         updateAdapter()
     }
 
@@ -97,8 +90,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
         values.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
         capturedImageUri = requireContext().contentResolver.insert(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            values
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
         )
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, capturedImageUri)
         if (cameraIntent.resolveActivity(requireActivity().packageManager) != null) {
@@ -112,9 +104,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     ) { result ->
         if (result.resultCode == android.app.Activity.RESULT_OK) {
             imageThumbnail = requireContext().contentResolver.loadThumbnail(
-                capturedImageUri!!,
-                Size(250, 250),
-                CancellationSignal()
+                capturedImageUri!!, Size(250, 250), CancellationSignal()
             )
 
             val customDialog = TitleDialogFragment()
@@ -130,8 +120,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-//        iterates over every permission in the array and checks if it has been granted
-
         ContextCompat.checkSelfPermission(
             requireContext(), it
         ) == PackageManager.PERMISSION_GRANTED
@@ -139,26 +127,18 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     }
 
 
-
     @SuppressLint("NotifyDataSetChanged")
     private fun setupAdapter() {
         myAdapter = UsersListAdapter({ item: ListItem, _: Int ->
             item.isExpanded = !item.isExpanded
             Log.d("item", item.isExpanded.toString() + " " + item.title)
-//            (cut my life into pieces) this is my last resort
             myAdapter.notifyDataSetChanged()
-
+            TODO("implement binding adapter correctly and use notifyItemChanged instead")
         }, { item ->
             val imageDialogFragment = FullImageDialog.newInstance(item.imageUri!!)
             imageDialogFragment.show(childFragmentManager, "Image_dialog")
         })
     }
-
-
-
-    private fun setupButtonListener() {
-    }
-
 
 
     private fun createAndAddListItemWithImage(title: String, details: String) {
@@ -172,7 +152,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
         )
         myList?.add(item)
         myAdapter.submitList(myList)
-//        Log.d("item", myList.toString())
         myList?.let { myAdapter.notifyItemChanged(it.size) }
     }
 
