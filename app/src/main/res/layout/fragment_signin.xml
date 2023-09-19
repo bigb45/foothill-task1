@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.logintask1.ui.auth.signin.SigninViewModel" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SigninFragment">
+    tools:context=".ui.auth.signin.SigninFragment">
+
+
+
 
     <ScrollView
         android:layout_width="0dp"
@@ -72,10 +84,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailContainer"
+                errorMessage="@{viewModel.emailError}"
+                validateInput="@{viewModel.validateEmail()}"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="1dp"
-                app:helperTextTextColor="@color/warning"
+                app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/email"
                 app:layout_constraintTop_toBottomOf="@+id/email">
@@ -83,7 +97,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/emailEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@={viewModel.email}"
                     android:background="@drawable/edit_text_border"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp" />
@@ -93,7 +108,6 @@
                 android:id="@+id/password_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginTop="48dp"
                 android:text="@string/password"
                 app:layout_constraintStart_toStartOf="parent"
@@ -101,8 +115,10 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordContainer"
+                errorMessage="@{viewModel.passwordError}"
+                validateInput="@{viewModel.validatePassword()}"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="12"
                 app:helperTextTextColor="@color/warning"
@@ -114,7 +130,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@={viewModel.password}"
                     android:background="@drawable/edit_text_border"
                     android:inputType="textPassword"
                     android:paddingStart="10dp"
@@ -165,3 +182,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

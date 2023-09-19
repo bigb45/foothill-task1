@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/signinFragment">
+    <fragment
+        tools:layout="@layout/fragment_signin"
+        android:id="@+id/signinFragment"
+        android:name="com.example.logintask1.ui.auth.signin.SigninFragment"
+        android:label="SigninFragment" >
+        <action
+            android:id="@+id/action_signinFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+        <!-- Define reverse action -->
+        <action
+            android:id="@+id/action_signinFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_signup"
+        android:id="@+id/signupFragment"
+        android:name="com.example.logintask1.ui.auth.signup.SignupFragment"
+        android:label="SignupFragment" >
+        <action
+            android:id="@+id/action_signupFragment_to_signinFragment"
+            app:destination="@id/signinFragment" />
+        <!-- Define reverse action -->
+        <action
+            android:id="@+id/action_signupFragment_to_signinFragment_reversed"
+            app:destination="@id/signinFragment" />
+        <action
+            android:id="@+id/action_signupFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="com.example.logintask1.ui.home.HomeActivity"
+        android:label="HomeActivity"
+        tools:layout="@layout/fragment_home">
+        <argument app:argType="string"
+            android:defaultValue="Username"
+            app:nullable="false"
+            android:name="user"/>
+    </activity>
+
+</navigation>
