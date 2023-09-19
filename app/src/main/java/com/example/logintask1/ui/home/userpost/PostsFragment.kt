@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.viewModels
 import com.example.logintask1.databinding.FragmentPostsBinding
 import com.example.logintask1.ui.home.userpost.adapter.PostListAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
 
-
+@AndroidEntryPoint
 class PostsFragment : Fragment() {
 
-    private var viewModel = PostsViewModel()
+//    TODO: use DI to inject modules into other places of the code
+    private val viewModel: PostsViewModel by viewModels()
     private lateinit var binding: FragmentPostsBinding
     private lateinit var adapter: PostListAdapter
 
