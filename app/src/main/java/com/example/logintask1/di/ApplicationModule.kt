@@ -11,20 +11,23 @@ import javax.inject.Singleton
 
 const val POSTS_BASE_URL = "https://64fce528605a026163aedf15.mockapi.io/"
 
+/*
+* Hilt module used to provide a retrofit instance which can be used to call the HTTP methods defined
+* in UserPostApiService
+* */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-        @Provides
-        @Singleton
-        fun providePostsService(): UserPostApiService {
-            return Retrofit
-                .Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(POSTS_BASE_URL)
-                .build()
-                .create(UserPostApiService::class.java)
+    /*
+    * Used to inject the UserPostApiService into other classes, returns a retrofit singleton
+    * */
+    @Provides
+    @Singleton
+    fun providePostsService(): UserPostApiService {
+        return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(POSTS_BASE_URL).build().create(UserPostApiService::class.java)
 
-        }
+    }
 // add other services here such as login api, etc.
 
 }
