@@ -46,10 +46,12 @@ class SignupViewModel @Inject constructor(private val validateUseCases: Validati
     }
 
     fun validateFields(): Boolean {
-        val emailCondition = validateEmail()
-        val passwordCondition = validatePassword()
-        val confirmPasswordCondition = validateConfirmPassword()
-        return emailCondition && passwordCondition && confirmPasswordCondition
+        with(validateUseCases){
+            val emailCondition = emailValidation.invoke(email.value.toString()).isNullOrEmpty()
+            val passwordCondition = passwordValidation.invoke(password.value.toString()).isNullOrEmpty()
+            val confirmPasswordCondition = confirmPasswordValidation.invoke(confirmPassword.value.toString(), password.value.toString()).isNullOrEmpty()
+            return emailCondition && passwordCondition && confirmPasswordCondition
+        }
     }
 
 

@@ -32,14 +32,11 @@ class SigninViewModel @Inject constructor(private val validationUseCases: Valida
     fun validatePassword(): Boolean {
         _passwordError.value = validationUseCases.passwordValidation.invoke(password.value.toString())
         return _passwordError.value == null || password.value?.isEmpty() != false
-
     }
 
     fun validateFields(): Boolean {
-        val emailCondition = validateEmail()
-        val passwordCondition = validatePassword()
+        val emailCondition = validationUseCases.emailValidation.invoke(email.value.toString()).isNullOrEmpty()
+        val passwordCondition = validationUseCases.passwordValidation.invoke(password.value.toString()).isNullOrEmpty()
         return emailCondition && passwordCondition
     }
-
-
 }
