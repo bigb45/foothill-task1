@@ -1,12 +1,11 @@
 package com.example.logintask1.ui.home.userpost
 
-import android.util.Log.e
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.logintask1.data.api.Result
 import com.example.logintask1.data.user.UserPost
-import com.example.logintask1.data.api.UserPostApiService
 import com.example.logintask1.data.repository.PostsRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -36,23 +35,29 @@ class PostsViewModel @Inject constructor(private val repository: PostsRepository
 
     fun fetchPosts() {
         viewModelScope.launch {
-            try {
-                _isLoading.postValue(true)
-                _errorMessage.postValue(null)
+            _isLoading.postValue(true)
+            _errorMessage.postValue(null)
+            when(val res = makeGetPostsRequest()) {
+                is Result.Success -> {
+                    _posts.postValue(res.data?: emptyList())
+                }
 
-                _posts.postValue(makeGetPostsRequest())
-            } catch (e: Exception) {
-                e("error", e.toString())
-                _errorMessage.postValue("An error occurred while loading posts")
-            } finally {
-                _isLoading.postValue(false)
+                is Result.Error -> {
+                    _errorMessage.postValue("An error occurred while loading posts")
+
+                }
             }
-
+            _isLoading.postValue(false)
         }
     }
 
-    private suspend fun makeGetPostsRequest(): List<UserPost> {
-        return repository.getPosts()
+    private suspend fun makeGetPostsRequest(): Result<List<UserPost>> {
+        return try{
+            val posts = repository.getPosts()
+            return Result.Success(posts)
+        }catch (e: Exception){
+            Result.Error(e)
+        }
     }
 
     fun likePost(post: UserPost) {
