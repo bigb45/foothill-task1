@@ -12,10 +12,11 @@ import com.example.logintask1.databinding.ActivityAuthBinding
 import com.example.logintask1.ui.auth.signin.SigninFragment
 import com.example.logintask1.ui.auth.signup.SignupFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
 private const val PAGE_COUNT = 2
 
-
+@AndroidEntryPoint
 class AuthActivity : FragmentActivity() {
     private lateinit var binding: ActivityAuthBinding
     private lateinit var pager: ViewPager2

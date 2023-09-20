@@ -1,11 +1,15 @@
 package com.example.logintask1.ui.auth.signup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.logintask1.ui.auth.use_cases.ValidationUseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SignupViewModel : ViewModel() {
+@HiltViewModel
+class SignupViewModel @Inject constructor(private val validateUseCases: ValidationUseCases) :
+    ViewModel() {
 
     private val _emailError = MutableLiveData<String?>()
     private val _passwordError = MutableLiveData<String?>()
@@ -26,37 +30,19 @@ class SignupViewModel : ViewModel() {
     }
 
     fun validateEmail(): Boolean {
-        val emailRegex = Regex(".+@.+(.com)$")
-        val isValid = emailRegex.matches(email.value.toString()) || email.value?.isEmpty() ?: true
-        if (!isValid) {
-            Log.d("error", "incorrect email format")
-            _emailError.value = "Incorrect email format"
-        } else {
-            Log.d("validation", emailRegex.matches(email.value.toString()).toString())
-            _emailError.value = null
-        }
-        return isValid && email.value?.isEmpty() == false
+        _emailError.value = validateUseCases.emailValidation.invoke(email.value.toString())
+        return _emailError.value == null || email.value?.isEmpty() != false
     }
 
     fun validatePassword(): Boolean {
-        val isValid =
-            (password.value.toString().length in 8..12) || password.value?.isEmpty() ?: true
-        if (!isValid) {
-            _passwordError.value = "Password must be between 8 and 12 characters"
-        } else {
-            _passwordError.value = null
-        }
-        return isValid && password.value?.isEmpty() == false
+        _passwordError.value = validateUseCases.passwordValidation.invoke(password.value.toString())
+        return _passwordError.value == null || password.value?.isEmpty() != false
     }
 
     fun validateConfirmPassword(): Boolean {
-        return if (confirmPassword.value.toString() != password.value.toString()) {
-            _confirmPasswordError.value = "Passwords don't match"
-            false
-        } else {
-            _confirmPasswordError.value = null
-            true
-        }
+        _confirmPasswordError.value = validateUseCases.confirmPasswordValidation(confirmPassword.value.toString(), password.value.toString())
+
+        return _confirmPasswordError.value  == null
     }
 
     fun validateFields(): Boolean {

@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.logintask1.data.user.ListItem
+import com.example.logintask1.domain.user.ListItem
 
 class HomeViewModel : ViewModel() {
     private val _personalPosts = MutableLiveData<List<ListItem>>()

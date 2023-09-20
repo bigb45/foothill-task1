@@ -1,4 +1,4 @@
-package com.example.logintask1.data.user
+package com.example.logintask1.domain.user
 
 import androidx.annotation.DrawableRes
 

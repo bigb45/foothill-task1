@@ -11,36 +11,35 @@ import androidx.fragment.app.viewModels
 import com.example.logintask1.R
 import com.example.logintask1.databinding.FragmentSignupBinding
 import com.example.logintask1.ui.home.HomeActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SignupFragment : Fragment() {
     private lateinit var binding: FragmentSignupBinding
-    private val model: SignupViewModel by viewModels()
+    private val viewModel: SignupViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_signup, container, false)
-        with(binding) {
-            viewModel = model
-            lifecycleOwner = this@SignupFragment
-        }
+
+        initView()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    private fun initView() {
         with(binding) {
-            viewModel = model
+            viewModel = this@SignupFragment.viewModel
             lifecycleOwner = this@SignupFragment
         }
         setupButtonListener()
+
     }
+
 
     private fun setupButtonListener() {
         binding.signinButton.setOnClickListener {
-            if (model.validateFields()) {
+            if (viewModel.validateFields()) {
                 startHomeActivity()
             }
         }

@@ -10,7 +10,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.example.logintask1.data.user.PostButtonStateIcons
+import com.example.logintask1.domain.user.PostButtonStateIcons
 import com.google.android.material.textfield.TextInputLayout
 
 object BindingAdapters {

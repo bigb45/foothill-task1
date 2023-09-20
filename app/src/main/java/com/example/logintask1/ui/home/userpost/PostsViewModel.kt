@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.logintask1.data.api.Result
-import com.example.logintask1.data.user.UserPost
-import com.example.logintask1.data.repository.PostsRepositoryImpl
+import com.example.logintask1.domain.api.Result
+import com.example.logintask1.domain.user.UserPost
+import com.example.logintask1.domain.repository.PostsRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
