@@ -2,8 +2,7 @@ package com.example.logintask1.ui.home.userpost
 
 import android.net.Uri
 import com.example.logintask1.R
-import com.example.logintask1.data.PostButtonStateIcons
-import com.example.logintask1.data.UserPost
+import com.example.logintask1.data.user.PostButtonStateIcons
 
 data class PostsUiModel(
     val postId: Int,

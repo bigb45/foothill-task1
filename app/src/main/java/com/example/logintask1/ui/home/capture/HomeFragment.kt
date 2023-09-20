@@ -23,10 +23,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.logintask1.R
-import com.example.logintask1.data.ListItem
+import com.example.logintask1.data.user.ListItem
 import com.example.logintask1.databinding.FragmentHomeBinding
 import com.example.logintask1.ui.home.capture.adapter.UsersListAdapter
-import java.util.Random
 
 
 val REQUIRED_PERMISSIONS = arrayOf(

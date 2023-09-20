@@ -1,4 +1,4 @@
-package com.example.logintask1.data
+package com.example.logintask1.data.user
 
 import android.graphics.Bitmap
 import android.net.Uri

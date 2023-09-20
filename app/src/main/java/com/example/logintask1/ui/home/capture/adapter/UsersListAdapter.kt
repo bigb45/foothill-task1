@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.logintask1.data.ListItem
-import com.example.logintask1.data.toUiModel
+import com.example.logintask1.data.user.ListItem
+import com.example.logintask1.data.user.toUiModel
 import com.example.logintask1.databinding.ListItemBinding
 
 

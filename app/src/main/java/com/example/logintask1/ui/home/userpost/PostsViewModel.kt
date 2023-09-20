@@ -5,14 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.logintask1.data.UserPost
-import com.example.logintask1.network.UserPostApiInterface
+import com.example.logintask1.data.user.UserPost
+import com.example.logintask1.data.api.UserPostApiService
+import com.example.logintask1.data.repository.PostsRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PostsViewModel @Inject constructor(apiService: UserPostApiInterface) : ViewModel() {
+class PostsViewModel @Inject constructor(private val repository: PostsRepositoryImpl) : ViewModel() {
     private val _posts = MutableLiveData<List<UserPost>>()
     private val _errorMessage = MutableLiveData<String?>()
     private val _isLoading = MutableLiveData(true)
@@ -22,7 +23,7 @@ class PostsViewModel @Inject constructor(apiService: UserPostApiInterface) : Vie
     val isLoading: LiveData<Boolean?> = _isLoading
     val posts: LiveData<List<UserPost>> = _posts
 
-    private val userPostsService: UserPostApiInterface = apiService
+
 
 // TODO add lazy loading to posts instead of loading all posts at once
 
@@ -51,7 +52,7 @@ class PostsViewModel @Inject constructor(apiService: UserPostApiInterface) : Vie
     }
 
     private suspend fun makeGetPostsRequest(): List<UserPost> {
-        return userPostsService.getPosts()
+        return repository.getPosts()
     }
 
     fun likePost(post: UserPost) {

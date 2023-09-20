@@ -1,4 +1,4 @@
-package com.example.logintask1.data
+package com.example.logintask1.data.user
 
 import android.util.Log
 import androidx.core.net.toUri

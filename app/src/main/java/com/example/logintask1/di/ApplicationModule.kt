@@ -1,6 +1,6 @@
 package com.example.logintask1.di
 
-import com.example.logintask1.network.UserPostApiInterface
+import com.example.logintask1.data.api.UserPostApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,19 +13,17 @@ const val POSTS_BASE_URL = "https://64fce528605a026163aedf15.mockapi.io/"
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiServices {
-
-
+object NetworkModule {
         @Provides
         @Singleton
-        fun providePostsService(): UserPostApiInterface{
+        fun providePostsService(): UserPostApiService {
             return Retrofit
                 .Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(POSTS_BASE_URL)
                 .build()
-                .create(UserPostApiInterface::class.java)
-             ;
+                .create(UserPostApiService::class.java)
+
         }
 // add other services here such as login api, etc.
 
