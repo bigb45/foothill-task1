@@ -2,7 +2,6 @@ package com.example.logintask1.util
 
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -62,8 +61,6 @@ object BindingAdapters {
     @BindingAdapter("setLoadingErrorText")
     @JvmStatic
     fun TextView.setLoadingError(errorText: String?) {
-        Log.d("binding error", errorText ?: "empty")
-
         errorText?.let {
             this.text = errorText
             this.visibility = View.VISIBLE

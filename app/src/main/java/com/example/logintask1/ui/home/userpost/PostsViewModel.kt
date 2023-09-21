@@ -65,6 +65,7 @@ class PostsViewModel @Inject constructor(private val repository: PostsRepository
         val position = _posts.value?.indexOfFirst { it.postId == post.postId } ?: 0
         val currentList = _posts.value?.toMutableList() ?: mutableListOf()
         currentList[position] = updatedPost
+        _posts.postValue(currentList)
         updatePost(updatedPost)
     }
 

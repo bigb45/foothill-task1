@@ -1,6 +1,5 @@
 package com.example.logintask1.domain.user
 
-import android.util.Log
 import androidx.core.net.toUri
 import com.example.logintask1.ui.home.userpost.PostsUiModel
 import com.google.gson.annotations.SerializedName
@@ -21,24 +20,11 @@ data class UserPost(
     val isLiked: Boolean,
     val isSaved: Boolean
 ){
-    companion object{
-        val errorPost =   UserPost(
-            1,
-            "Error while fetching posts",
-            "An unexpected error occurred while fetching posts",
-            "Admin",
-            Date(),
-            0,
-            "",
-            false,
-            isSaved = false
-        )
-    }
+
 }
 
 fun UserPost.toUiModel(): PostsUiModel {
     val formattedDate = createDate.getCustomPattern()
-    Log.d("url", avatarUrl)
     return PostsUiModel(
         postId,
         postTitle,

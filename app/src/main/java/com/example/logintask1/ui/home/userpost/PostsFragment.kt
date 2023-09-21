@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PostsFragment : Fragment() {
 
-//    TODO: use DI to inject modules into other places of the code
     private val viewModel: PostsViewModel by viewModels()
     private lateinit var binding: FragmentPostsBinding
     private lateinit var adapter: PostListAdapter
