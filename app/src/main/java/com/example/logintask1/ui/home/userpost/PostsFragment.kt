@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.logintask1.databinding.FragmentPostsBinding
 import com.example.logintask1.ui.home.userpost.adapter.PostListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,9 +33,11 @@ class PostsFragment : Fragment() {
     }
 
     private fun initView() {
-        adapter = PostListAdapter { post ->
+        (binding.recyclerViewPosts.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
+            false
+        adapter = PostListAdapter({ post ->
             viewModel.likePost(post)
-        }
+        }, {post -> viewModel.savePost(post)})
 
         with(binding) {
             viewModel = this@PostsFragment.viewModel

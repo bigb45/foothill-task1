@@ -22,9 +22,10 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.logintask1.R
-import com.example.logintask1.domain.user.ListItem
 import com.example.logintask1.databinding.FragmentHomeBinding
+import com.example.logintask1.domain.user.ListItem
 import com.example.logintask1.ui.home.capture.adapter.UsersListAdapter
 
 
@@ -59,6 +60,10 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     private fun initView(){
 
         with(binding) {
+
+            (binding.recyclerViewUsers.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
+                false
+
             viewModel = this@HomeFragment.viewModel
             lifecycleOwner = this@HomeFragment
             openCameraToolbar.inflateMenu(R.menu.camera_toolbar_menu)
@@ -150,7 +155,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
 
     override fun onInputConfirmed(title: String, details: String) {
         createAndAddListItemWithImage(title, details)
-        binding.constraintLayoutPlaceholder.visibility = View.GONE
     }
 
     private fun setupRecyclerView() {
