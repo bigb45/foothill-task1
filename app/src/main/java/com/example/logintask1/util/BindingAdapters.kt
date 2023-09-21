@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.logintask1.domain.user.PostButtonStateIcons
@@ -75,6 +76,11 @@ object BindingAdapters {
     @JvmStatic
     fun ProgressBar.setVisible(isVisible: Boolean) {
         this.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+    @BindingAdapter("hasItems")
+    @JvmStatic
+    fun ConstraintLayout.setItemsVisible(hasItems: Boolean) {
+        this.visibility = if(hasItems) View.GONE else View.VISIBLE
     }
 }
 

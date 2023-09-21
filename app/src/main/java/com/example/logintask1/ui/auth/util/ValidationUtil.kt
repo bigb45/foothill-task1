@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 val EMAIL_PATTERN = Regex(".+@.+(.com)$")
-// TODO: import context to use string resources instead of fixed string
+//  TODO: import context to use string resources instead of fixed string
 
 class ValidationUtil @Inject constructor() {
     fun validateEmail(email: String): String?{

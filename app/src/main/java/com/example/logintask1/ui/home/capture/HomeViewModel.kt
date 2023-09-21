@@ -10,12 +10,13 @@ class HomeViewModel : ViewModel() {
     private val _personalPosts = MutableLiveData<List<ListItem>>()
 
     val personalPosts: LiveData<List<ListItem>> = _personalPosts
-
+    val hasItems: MutableLiveData<Boolean> = MutableLiveData(false)
     fun addPersonalPost(post: ListItem){
         val currentPosts = _personalPosts.value?.toMutableList() ?: mutableListOf()
         currentPosts.add(post)
         _personalPosts.value = currentPosts
-        Log.d("posts", _personalPosts.value.toString())
+        hasItems.value = _personalPosts.value?.size != 0
+
     }
 
     fun expandCard(item: ListItem){

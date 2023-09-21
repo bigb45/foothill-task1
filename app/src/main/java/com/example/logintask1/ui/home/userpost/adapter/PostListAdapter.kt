@@ -10,15 +10,18 @@ import com.example.logintask1.domain.user.toUiModel
 import com.example.logintask1.databinding.PostBinding
 
 
-class PostListAdapter(private val likePost: (UserPost) -> Unit) : ListAdapter<UserPost, PostListAdapter.PostListViewHolder>(PostListDiffCallback()) {
+class PostListAdapter(private val likePost: (UserPost) -> Unit, private val savePost: (UserPost) -> Unit) : ListAdapter<UserPost, PostListAdapter.PostListViewHolder>(PostListDiffCallback()) {
     private lateinit var binding: PostBinding
 
-    class PostListViewHolder(private val binding: PostBinding, private val likePost: (UserPost) -> Unit) : ViewHolder(binding.root) {
+    class PostListViewHolder(private val binding: PostBinding, private val likePost: (UserPost) -> Unit, private val savePost: (UserPost) -> Unit) : ViewHolder(binding.root) {
         fun bind(currentPost: UserPost) {
             with(binding) {
                 model = currentPost.toUiModel()
-                binding.buttonLike.setOnClickListener {
+                buttonLike.setOnClickListener {
                     likePost(currentPost)
+                }
+                buttonBookmark.setOnClickListener {
+                    savePost(currentPost)
                 }
             }
         }
@@ -26,7 +29,7 @@ class PostListAdapter(private val likePost: (UserPost) -> Unit) : ListAdapter<Us
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostListViewHolder {
         binding = PostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostListViewHolder(binding, likePost)
+        return PostListViewHolder(binding, likePost, savePost)
     }
 
     override fun onBindViewHolder(holder: PostListViewHolder, position: Int) {

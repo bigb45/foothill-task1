@@ -60,6 +60,16 @@ class PostsViewModel @Inject constructor(private val repository: PostsRepository
         }
     }
 
+    fun savePost(post: UserPost){
+        val updatedPost = post.copy(
+            isSaved = !post.isSaved
+        )
+        val position = _posts.value?.indexOfFirst { it.postId == post.postId } ?: 0
+        val currentList = _posts.value?.toMutableList() ?: mutableListOf()
+        currentList[position] = updatedPost
+        _posts.postValue(currentList)
+    }
+
     fun likePost(post: UserPost) {
         val updatedPost = post.copy(
             likes = if (post.isLiked) post.likes - 1 else post.likes + 1,
