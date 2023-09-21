@@ -12,6 +12,8 @@ interface PostsRepository {
     */
     suspend fun getPosts(): List<UserPost>
 
-    // TODO: implement putPost to be used to like and save posts
-    suspend fun putPost(): UserPost
+    /*
+    * makes a put request to the api when the user likes or saves a post
+    */
+    suspend fun updatePost(id: Int, post: UserPost): UserPost
 }

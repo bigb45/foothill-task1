@@ -19,7 +19,7 @@ class PostsRepositoryImpl @Inject constructor(private val apiService: UserPostAp
         return apiService.getPosts()
     }
 
-    override suspend fun putPost(): UserPost {
-        TODO("Not yet implemented")
+    override suspend fun updatePost(id: Int, post: UserPost): UserPost {
+        return apiService.updatePost(id, post)
     }
 }

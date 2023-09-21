@@ -31,8 +31,6 @@ class PostsViewModel @Inject constructor(private val repository: PostsRepository
         fetchPosts()
     }
 
-//    TODO: use request error handler instead of try-catch block
-
     fun fetchPosts() {
         viewModelScope.launch {
             _isLoading.postValue(true)
@@ -67,7 +65,7 @@ class PostsViewModel @Inject constructor(private val repository: PostsRepository
         val position = _posts.value?.indexOfFirst { it.postId == post.postId } ?: 0
         val currentList = _posts.value?.toMutableList() ?: mutableListOf()
         currentList[position] = updatedPost
-        _posts.postValue(currentList)
+        updatePost(updatedPost)
     }
 
     fun likePost(post: UserPost) {
@@ -79,6 +77,13 @@ class PostsViewModel @Inject constructor(private val repository: PostsRepository
         val currentList = _posts.value?.toMutableList() ?: mutableListOf()
         currentList[position] = updatedPost
         _posts.postValue(currentList)
+        updatePost(updatedPost)
+    }
+
+    private fun updatePost(post: UserPost){
+        viewModelScope.launch {
+            repository.updatePost(post.postId, post)
+        }
     }
 
 
