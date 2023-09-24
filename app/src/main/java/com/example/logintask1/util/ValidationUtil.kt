@@ -1,13 +1,6 @@
-package com.example.logintask1.ui.auth.util
+package com.example.logintask1.util
 
-import android.app.Application
-import com.example.logintask1.R
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
-import javax.inject.Singleton
 
 val EMAIL_PATTERN = Regex(".+@.+(.com)$")
 //  TODO: import context to use string resources instead of fixed string

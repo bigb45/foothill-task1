@@ -1,6 +1,6 @@
-package com.example.logintask1.ui.auth.use_cases
+package com.example.logintask1.domain.use_cases
 
-import com.example.logintask1.ui.auth.util.ValidationUtil
+import com.example.logintask1.util.ValidationUtil
 import javax.inject.Inject
 
 class PasswordValidationUseCase @Inject constructor(private val validationUtil: ValidationUtil){

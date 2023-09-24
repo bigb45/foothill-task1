@@ -1,4 +1,4 @@
-package com.example.logintask1.domain.user
+package com.example.logintask1.ui.home.userpost
 
 import androidx.annotation.DrawableRes
 

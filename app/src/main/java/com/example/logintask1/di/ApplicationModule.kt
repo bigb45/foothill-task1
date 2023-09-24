@@ -1,6 +1,6 @@
 package com.example.logintask1.di
 
-import com.example.logintask1.domain.api.UserPostApiService
+import com.example.logintask1.data.api.UserPostApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -3,8 +3,7 @@ package com.example.logintask1.ui.auth.signin
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.logintask1.ui.auth.use_cases.ValidationUseCases
-import com.example.logintask1.ui.auth.util.ValidationUtil
+import com.example.logintask1.domain.use_cases.ValidationUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

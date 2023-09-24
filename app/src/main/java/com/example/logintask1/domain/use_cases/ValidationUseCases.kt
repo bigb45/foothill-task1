@@ -1,4 +1,4 @@
-package com.example.logintask1.ui.auth.use_cases
+package com.example.logintask1.domain.use_cases
 
 import javax.inject.Inject
 

@@ -1,6 +1,6 @@
 package com.example.logintask1.domain.repository
 
-import com.example.logintask1.domain.user.UserPost
+import com.example.logintask1.ui.home.userpost.UserPost
 
 /*
 * The repository interface used to handle data and remote requests

@@ -1,4 +1,4 @@
-package com.example.logintask1.ui.home.capture
+package com.example.logintask1.ui.home.capture.subfragments
 
 import android.net.Uri
 import android.os.Bundle

@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.example.logintask1.domain.user.PostButtonStateIcons
+import com.example.logintask1.ui.home.userpost.PostButtonStateIcons
 import com.google.android.material.textfield.TextInputLayout
 
 object BindingAdapters {

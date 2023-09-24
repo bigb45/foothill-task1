@@ -1,7 +1,6 @@
-package com.example.logintask1.domain.user
+package com.example.logintask1.ui.home.userpost
 
 import androidx.core.net.toUri
-import com.example.logintask1.ui.home.userpost.PostsUiModel
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.Date

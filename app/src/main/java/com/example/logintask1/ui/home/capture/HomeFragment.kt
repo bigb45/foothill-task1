@@ -25,8 +25,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.logintask1.R
 import com.example.logintask1.databinding.FragmentHomeBinding
-import com.example.logintask1.domain.user.ListItem
 import com.example.logintask1.ui.home.capture.adapter.UsersListAdapter
+import com.example.logintask1.ui.home.capture.subfragments.FullImageDialog
+import com.example.logintask1.ui.home.capture.subfragments.TitleDialogFragment
 
 
 val REQUIRED_PERMISSIONS = arrayOf(

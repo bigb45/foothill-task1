@@ -1,8 +1,7 @@
-package com.example.logintask1.domain.user
+package com.example.logintask1.ui.home.capture
 
 import android.graphics.Bitmap
 import android.net.Uri
-import com.example.logintask1.ui.home.capture.HomeUiModel
 
 data class ListItem(
     val id: Int,

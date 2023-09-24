@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.logintask1.domain.user.ListItem
-import com.example.logintask1.domain.user.toUiModel
+import com.example.logintask1.ui.home.capture.ListItem
+import com.example.logintask1.ui.home.userpost.toUiModel
 import com.example.logintask1.databinding.ListItemBinding
+import com.example.logintask1.ui.home.capture.toUiModel
 
 
 class UsersListAdapter(

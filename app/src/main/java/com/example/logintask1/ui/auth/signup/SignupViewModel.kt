@@ -3,7 +3,7 @@ package com.example.logintask1.ui.auth.signup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.logintask1.ui.auth.use_cases.ValidationUseCases
+import com.example.logintask1.domain.use_cases.ValidationUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -40,16 +40,23 @@ class SignupViewModel @Inject constructor(private val validateUseCases: Validati
     }
 
     fun validateConfirmPassword(): Boolean {
-        _confirmPasswordError.value = validateUseCases.confirmPasswordValidation(confirmPassword.value.toString(), password.value.toString())
+        _confirmPasswordError.value = validateUseCases.confirmPasswordValidation(
+            confirmPassword.value.toString(),
+            password.value.toString()
+        )
 
-        return _confirmPasswordError.value  == null
+        return _confirmPasswordError.value == null
     }
 
     fun validateFields(): Boolean {
-        with(validateUseCases){
+        with(validateUseCases) {
             val emailCondition = emailValidation.invoke(email.value.toString()).isNullOrEmpty()
-            val passwordCondition = passwordValidation.invoke(password.value.toString()).isNullOrEmpty()
-            val confirmPasswordCondition = confirmPasswordValidation.invoke(confirmPassword.value.toString(), password.value.toString()).isNullOrEmpty()
+            val passwordCondition =
+                passwordValidation.invoke(password.value.toString()).isNullOrEmpty()
+            val confirmPasswordCondition = confirmPasswordValidation.invoke(
+                confirmPassword.value.toString(),
+                password.value.toString()
+            ).isNullOrEmpty()
             return emailCondition && passwordCondition && confirmPasswordCondition
         }
     }

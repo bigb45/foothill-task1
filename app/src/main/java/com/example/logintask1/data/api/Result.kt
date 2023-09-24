@@ -1,4 +1,4 @@
-package com.example.logintask1.domain.api
+package com.example.logintask1.data.api
 
 sealed class Result<out T> {
     data class Success<out T>(val data: T) : Result<T>()

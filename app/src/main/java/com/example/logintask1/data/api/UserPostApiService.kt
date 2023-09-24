@@ -1,6 +1,6 @@
-package com.example.logintask1.domain.api
+package com.example.logintask1.data.api
 
-import com.example.logintask1.domain.user.UserPost
+import com.example.logintask1.ui.home.userpost.UserPost
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT

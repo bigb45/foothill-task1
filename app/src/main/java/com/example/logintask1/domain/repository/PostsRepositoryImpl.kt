@@ -1,7 +1,7 @@
 package com.example.logintask1.domain.repository
 
-import com.example.logintask1.domain.api.UserPostApiService
-import com.example.logintask1.domain.user.UserPost
+import com.example.logintask1.data.api.UserPostApiService
+import com.example.logintask1.ui.home.userpost.UserPost
 import javax.inject.Inject
 
 /*
