@@ -11,13 +11,13 @@ import javax.inject.Inject
 class SignupViewModel @Inject constructor(private val validateUseCases: ValidationUseCases) :
     ViewModel() {
 
-    private val _emailError = MutableLiveData<String?>()
-    private val _passwordError = MutableLiveData<String?>()
-    private val _confirmPasswordError = MutableLiveData<String?>()
+    private val _emailError = MutableLiveData<Int?>()
+    private val _passwordError = MutableLiveData<Int?>()
+    private val _confirmPasswordError = MutableLiveData<Int?>()
 
-    val emailError: LiveData<String?> = _emailError
-    val passwordError: LiveData<String?> = _passwordError
-    val confirmPasswordError: LiveData<String?> = _confirmPasswordError
+    val emailError: LiveData<Int?> = _emailError
+    val passwordError: LiveData<Int?> = _passwordError
+    val confirmPasswordError: LiveData<Int?> = _confirmPasswordError
 
     var password: MutableLiveData<String?> = MutableLiveData()
     var email: MutableLiveData<String?> = MutableLiveData()
@@ -30,12 +30,12 @@ class SignupViewModel @Inject constructor(private val validateUseCases: Validati
     }
 
     fun validateEmail(): Boolean {
-        _emailError.value = validateUseCases.emailValidation.invoke(email.value.toString())
+        _emailError.value = validateUseCases.emailValidation.invoke(email.value.toString())?.message
         return _emailError.value == null || email.value?.isEmpty() != false
     }
 
     fun validatePassword(): Boolean {
-        _passwordError.value = validateUseCases.passwordValidation.invoke(password.value.toString())
+        _passwordError.value = validateUseCases.passwordValidation.invoke(password.value.toString())?.message
         return _passwordError.value == null || password.value?.isEmpty() != false
     }
 
@@ -43,20 +43,20 @@ class SignupViewModel @Inject constructor(private val validateUseCases: Validati
         _confirmPasswordError.value = validateUseCases.confirmPasswordValidation(
             confirmPassword.value.toString(),
             password.value.toString()
-        )
+        )?.message
 
         return _confirmPasswordError.value == null
     }
 
     fun validateFields(): Boolean {
         with(validateUseCases) {
-            val emailCondition = emailValidation.invoke(email.value.toString()).isNullOrEmpty()
+            val emailCondition = emailValidation.invoke(email.value.toString()) == null
             val passwordCondition =
-                passwordValidation.invoke(password.value.toString()).isNullOrEmpty()
+                passwordValidation.invoke(password.value.toString()) == null
             val confirmPasswordCondition = confirmPasswordValidation.invoke(
                 confirmPassword.value.toString(),
                 password.value.toString()
-            ).isNullOrEmpty()
+            ) == null
             return emailCondition && passwordCondition && confirmPasswordCondition
         }
     }

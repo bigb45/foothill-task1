@@ -7,23 +7,27 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.example.logintask1.R
 import com.example.logintask1.ui.home.userpost.PostButtonStateIcons
 import com.google.android.material.textfield.TextInputLayout
 
 object BindingAdapters {
+
     @BindingAdapter("validateInput", "errorMessage")
     @JvmStatic
-    fun setError(view: TextInputLayout, isValid: Boolean, error: String?) {
+    fun setError(view: TextInputLayout, isValid: Boolean, @StringRes errorId: Int?) {
         if (isValid) {
             view.error = null
         } else {
-            view.error = error
+            errorId?.let{
+                view.error = view.context.getString(errorId)
+            }
         }
     }
-
     @BindingAdapter("expand")
     @JvmStatic
     fun expandView(view: TextView, isExpanded: Boolean) {

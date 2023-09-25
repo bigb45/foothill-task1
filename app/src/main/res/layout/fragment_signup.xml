@@ -197,7 +197,6 @@
                 app:helperTextTextColor="@color/warning"
                 app:layout_constraintBottom_toTopOf="@+id/signinButton"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:helperText="@{viewModel.confirmPasswordError}"
                 app:layout_constraintStart_toStartOf="@+id/textView4"
                 app:layout_constraintTop_toBottomOf="@+id/textView4">
 
