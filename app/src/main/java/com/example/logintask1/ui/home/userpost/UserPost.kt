@@ -14,10 +14,10 @@ data class UserPost(
     val userName: String,
     @SerializedName("createdAt")
     val createDate: Date,
-    val likes: Int,
+    val likes: Int = 0,
     val avatarUrl: String,
-    val isLiked: Boolean,
-    val isSaved: Boolean
+    val isLiked: Boolean = false,
+    val isSaved: Boolean = true
 ){
 
 }
@@ -33,7 +33,7 @@ fun UserPost.toUiModel(): PostsUiModel {
         likes,
         isLiked,
         avatarUrl.toUri(),
-        isSaved
+        isSaved,
     )
 }
 

@@ -9,7 +9,7 @@ data class ListItem(
     val imageUri: Uri? = null,
     val details: String? = "Nothing to show.",
     val thumbnail: Bitmap,
-    var isExpanded: Boolean = false
+    var isExpanded: Boolean = false,
 )
 
 fun ListItem.toUiModel() : HomeUiModel {

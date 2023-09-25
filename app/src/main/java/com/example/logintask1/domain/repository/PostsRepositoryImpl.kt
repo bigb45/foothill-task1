@@ -22,4 +22,8 @@ class PostsRepositoryImpl @Inject constructor(private val apiService: UserPostAp
     override suspend fun updatePost(id: Int, post: UserPost): UserPost {
         return apiService.updatePost(id, post)
     }
+
+    override suspend fun uploadPost(post: UserPost) {
+        return apiService.uploadPost(post)
+    }
 }

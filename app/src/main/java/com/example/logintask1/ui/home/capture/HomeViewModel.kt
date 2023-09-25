@@ -3,8 +3,14 @@ package com.example.logintask1.ui.home.capture
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-
-class HomeViewModel : ViewModel() {
+import androidx.lifecycle.viewModelScope
+import com.example.logintask1.domain.repository.PostsRepositoryImpl
+import com.example.logintask1.ui.home.userpost.UserPost
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val repository: PostsRepositoryImpl): ViewModel() {
     private val _personalPosts = MutableLiveData<List<ListItem>>()
 
     val personalPosts: LiveData<List<ListItem>> = _personalPosts
@@ -30,5 +36,11 @@ class HomeViewModel : ViewModel() {
 
     fun getId(): Int{
         return (_personalPosts.value?.size?.plus(1)) ?: 1
+    }
+    fun uploadPost(post: UserPost){
+        viewModelScope.launch {
+            repository.uploadPost(post)
+        }
+
     }
 }

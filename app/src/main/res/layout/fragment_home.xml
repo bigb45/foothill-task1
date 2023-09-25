@@ -76,6 +76,21 @@
                     app:layout_constraintStart_toStartOf="@+id/imageViewPlaceholder" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButtonOpenCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/google_signin_button"
+                android:clickable="true"
+                android:contentDescription="@string/placeholder"
+                android:focusable="true"
+                app:backgroundTint="#FF9F9F9F"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/outline_camera_alt_24" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

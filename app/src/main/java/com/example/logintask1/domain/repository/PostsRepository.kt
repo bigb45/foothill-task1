@@ -16,4 +16,8 @@ interface PostsRepository {
     * makes a put request to the api when the user likes or saves a post
     */
     suspend fun updatePost(id: Int, post: UserPost): UserPost
+
+    /*
+    * uploads a post made by the user to the remote api*/
+    suspend fun uploadPost(post: UserPost)
 }

@@ -1,6 +1,5 @@
 package com.example.logintask1.ui.home.capture
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -28,16 +27,20 @@ import com.example.logintask1.databinding.FragmentHomeBinding
 import com.example.logintask1.ui.home.capture.adapter.UsersListAdapter
 import com.example.logintask1.ui.home.capture.subfragments.FullImageDialog
 import com.example.logintask1.ui.home.capture.subfragments.TitleDialogFragment
+import com.example.logintask1.ui.home.userpost.UserPost
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
 
 
 val REQUIRED_PERMISSIONS = arrayOf(
     android.Manifest.permission.CAMERA,
 )
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var myAdapter: UsersListAdapter
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels<HomeViewModel>()
     private var capturedImageUri: Uri? = null
     private var imageThumbnail: Bitmap? = null
 
@@ -58,31 +61,22 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
 
 
     @RequiresApi(Build.VERSION_CODES.Q)
-    private fun initView(){
+    private fun initView() {
 
         with(binding) {
-
+            binding.floatingActionButtonOpenCamera.setOnClickListener {
+                dispatchCaptureIntent()
+            }
             (binding.recyclerViewUsers.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
                 false
 
             viewModel = this@HomeFragment.viewModel
             lifecycleOwner = this@HomeFragment
-            openCameraToolbar.inflateMenu(R.menu.camera_toolbar_menu)
-            openCameraToolbar.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.open_camera -> {
-                        dispatchCaptureIntent()
-                        true
-                    }
-                    else -> {
-                        false
-                    }
-                }
-            }
+
         }
         setupAdapter()
         setupRecyclerView()
-        viewModel.personalPosts.observe(viewLifecycleOwner){
+        viewModel.personalPosts.observe(viewLifecycleOwner) {
             myAdapter.submitList(it)
         }
     }
@@ -131,7 +125,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     }
 
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun setupAdapter() {
         myAdapter = UsersListAdapter({ item ->
             viewModel.expandCard(item)
@@ -141,21 +134,40 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
         })
     }
 
+    private fun createItem(title: String, details: String): ListItem {
+        val date = Date()
+        val myPost = UserPost(
+            postId = viewModel.getId(),
+            postTitle = title,
+            postBody = details,
+            // TODO: change this to username acquired from database
+            userName = "Mohammed Natour",
+            createDate = Date(date.time),
+            likes = 0,
+            avatarUrl = "",
+            isLiked = false,
+            isSaved = false,
+        )
+        viewModel.uploadPost(myPost)
 
-    private fun createAndAddListItemWithImage(title: String, details: String) {
-
-        val item = ListItem(
+        return ListItem(
             imageUri = capturedImageUri,
             title = title,
             details = details,
             id = viewModel.getId(),
             thumbnail = imageThumbnail!!
         )
+
+    }
+
+    private fun addListItemWithImage(item: ListItem) {
+
         viewModel.addPersonalPost(item)
     }
 
     override fun onInputConfirmed(title: String, details: String) {
-        createAndAddListItemWithImage(title, details)
+        val item = createItem(title, details)
+        addListItemWithImage(item)
     }
 
     private fun setupRecyclerView() {
@@ -164,7 +176,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
             adapter = myAdapter
         }
     }
-
 
 
     private val activityResultLauncher = registerForActivityResult(

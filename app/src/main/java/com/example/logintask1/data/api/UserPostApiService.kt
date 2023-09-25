@@ -3,6 +3,7 @@ package com.example.logintask1.data.api
 import com.example.logintask1.ui.home.userpost.UserPost
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
@@ -19,4 +20,7 @@ interface UserPostApiService {
 
     @PUT("posts/{id}")
     suspend fun updatePost(@Path("id") id: Int, @Body updatedPost: UserPost): UserPost
+
+    @POST("posts")
+    suspend fun uploadPost(@Body post: UserPost)
 }
