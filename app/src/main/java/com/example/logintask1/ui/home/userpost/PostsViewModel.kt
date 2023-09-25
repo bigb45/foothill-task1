@@ -5,14 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.logintask1.data.api.Result
+import com.example.logintask1.domain.use_cases.GetPostsUseCase
 import com.example.logintask1.domain.use_cases.RequestsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class PostsViewModel @Inject constructor(
-    private val apiServices: RequestsUseCases
+    private val apiServices: RequestsUseCases,
+    private val getPostsUseCase: GetPostsUseCase
 ) :
     ViewModel() {
     private val _posts = MutableLiveData<List<UserPost>?>()
@@ -33,21 +37,21 @@ class PostsViewModel @Inject constructor(
     }
 
     fun fetchPosts() {
-        viewModelScope.launch {
-            _isLoading.postValue(true)
-            _errorMessage.postValue(null)
-            when (val res = apiServices.getPostsUseCase()) {
-                is Result.Success -> {
-                    _posts.postValue(res.data)
-                }
-                is Result.Error -> {
-                    _errorMessage.postValue("An error occurred while loading posts")
-                }
-            }
-            _isLoading.postValue(false)
+        viewModelScope.launch(errorHandler()) {
+            val posts = getPostsUseCase()
+        }.invokeOnCompletion {
+
         }
     }
 
+    private fun errorHandler() = CoroutineExceptionHandler { _, throwable ->
+        when(throwable){
+            is IOException -> ""
+            else  ->{
+                //TODO show snackbar
+            }
+        }
+    }
 
     fun savePost(post: UserPost) {
         val updatedPost = post.copy(

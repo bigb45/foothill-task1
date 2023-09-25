@@ -4,7 +4,7 @@ import com.example.logintask1.util.ValidationUtil
 import javax.inject.Inject
 
 class ConfirmPasswordValidationUseCase @Inject constructor(private val validationUtil: ValidationUtil){
-    operator fun invoke(confirmPassword: String, password: String): String?{
+    operator fun invoke(confirmPassword: String, password: String): String? {
         return validationUtil.validateConfirmPassword(confirmPassword, password)
 
     }

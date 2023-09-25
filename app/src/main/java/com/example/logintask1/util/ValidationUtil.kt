@@ -1,5 +1,7 @@
 package com.example.logintask1.util
 
+import androidx.annotation.StringRes
+import com.example.logintask1.R
 import javax.inject.Inject
 
 val EMAIL_PATTERN = Regex(".+@.+(.com)$")
@@ -16,10 +18,10 @@ class ValidationUtil @Inject constructor() {
         return null
     }
 
-    fun validatePassword(password: String): String? {
+    fun validatePassword(password: String):PasswordValidation {
 
         if (password.length !in 8..12) {
-            return "Password must be between 8 and 12 characters"
+            return PasswordValidation.EMPTY
         } else if(password.isEmpty()){
              return "Password cannot be empty"
         }
@@ -27,12 +29,12 @@ class ValidationUtil @Inject constructor() {
     }
 
 
-    fun validateConfirmPassword(confirmPassword: String, password: String): String? {
-        return if (confirmPassword != password) {
-            "Passwords don't match"
-        } else {
-            null
-        }
+    fun validateConfirmPassword(confirmPassword: String, password: String): Boolean{
+        return (confirmPassword != password)
     }
 
+}
+
+enum class PasswordValidation (@StringRes val message:Int){
+    EMPTY(R.string.password), NO_MATCH,
 }

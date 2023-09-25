@@ -6,12 +6,7 @@ import com.example.logintask1.ui.home.userpost.UserPost
 import javax.inject.Inject
 
 class GetPostsUseCase @Inject constructor(private val repository: PostsRepositoryImpl) {
-    suspend operator fun invoke(): Result<List<UserPost>>{
-        return try {
-            val posts = repository.getPosts()
-            return Result.Success(posts)
-        } catch (e: Exception) {
-            Result.Error(e)
-        }
+    suspend operator fun invoke(): List<UserPost>{
+        return repository.getPosts()
     }
 }

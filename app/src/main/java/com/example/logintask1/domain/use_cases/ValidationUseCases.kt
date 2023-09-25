@@ -6,5 +6,5 @@ data class ValidationUseCases @Inject constructor(
     val confirmPasswordValidation: ConfirmPasswordValidationUseCase,
     val passwordValidation: PasswordValidationUseCase,
     val emailValidation: EmailValidationUseCase,
-
-    )
+    ){
+}

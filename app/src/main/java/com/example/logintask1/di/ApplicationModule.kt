@@ -21,8 +21,8 @@ object NetworkModule {
     /*
     * Used to inject the UserPostApiService into other classes, returns a retrofit singleton
     * */
-    @Provides
-    @Singleton
+//    @Provides
+//    @Singleton
     fun providePostsService(): UserPostApiService {
         return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
             .baseUrl(POSTS_BASE_URL).build().create(UserPostApiService::class.java)
