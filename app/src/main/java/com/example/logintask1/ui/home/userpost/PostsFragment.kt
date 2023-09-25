@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.logintask1.databinding.FragmentPostsBinding
 import com.example.logintask1.ui.home.userpost.adapter.PostListAdapter
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -52,9 +53,11 @@ class PostsFragment : Fragment() {
         viewModel.posts.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
         }
-
-
-
+        viewModel.snackbarError.observe(viewLifecycleOwner){error ->
+            if (error != null) {
+                Snackbar.make(requireView(), error, Snackbar.LENGTH_LONG).show()
+            }
+        }
     }
 
     companion object {

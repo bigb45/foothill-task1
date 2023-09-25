@@ -1,10 +1,10 @@
 package com.example.logintask1.ui.home.userpost
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.logintask1.data.api.Result
 import com.example.logintask1.domain.use_cases.GetPostsUseCase
 import com.example.logintask1.domain.use_cases.RequestsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,12 +22,13 @@ class PostsViewModel @Inject constructor(
     private val _posts = MutableLiveData<List<UserPost>?>()
     private val _errorMessage = MutableLiveData<String?>()
     private val _isLoading = MutableLiveData(true)
+    private val _snackbarError = MutableLiveData<String?>()
 
 
     val errorMessage: LiveData<String?> = _errorMessage
     val isLoading: LiveData<Boolean?> = _isLoading
     val posts: MutableLiveData<List<UserPost>?> = _posts
-
+    val snackbarError: LiveData<String?> = _snackbarError
 
 // TODO add lazy loading to posts instead of loading all posts at once
 
@@ -39,16 +40,23 @@ class PostsViewModel @Inject constructor(
     fun fetchPosts() {
         viewModelScope.launch(errorHandler()) {
             val posts = getPostsUseCase()
-        }.invokeOnCompletion {
-
+            _posts.postValue(posts)
+            _snackbarError.postValue(null)
         }
     }
 
     private fun errorHandler() = CoroutineExceptionHandler { _, throwable ->
         when(throwable){
-            is IOException -> ""
-            else  ->{
-                //TODO show snackbar
+            is IOException -> {
+                _snackbarError.postValue("Error while fetching data")
+            }
+            is NetworkErrorException -> {
+                _snackbarError.postValue("A network error occurred")
+
+            }
+            else -> {
+                _snackbarError.postValue("Unhandled error")
+
             }
         }
     }
@@ -80,6 +88,4 @@ class PostsViewModel @Inject constructor(
             apiServices.updatePostsUseCase(post)
         }
     }
-
-
 }
