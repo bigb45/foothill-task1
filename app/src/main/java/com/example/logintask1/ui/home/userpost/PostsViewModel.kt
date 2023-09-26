@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.logintask1.data.api.Result
 import com.example.logintask1.domain.use_cases.GetPostsUseCase
 import com.example.logintask1.domain.use_cases.RequestsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
