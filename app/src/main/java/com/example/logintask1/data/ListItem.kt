@@ -2,7 +2,7 @@ package com.example.logintask1.data
 
 import android.graphics.Bitmap
 import android.net.Uri
-import com.example.logintask1.ui.home.HomeUiModel
+import com.example.logintask1.ui.home.capture.HomeUiModel
 
 data class ListItem(
 //   remove the id
@@ -16,6 +16,6 @@ data class ListItem(
     var isExpanded: Boolean = false
 )
 
-fun ListItem.toUiModel() : HomeUiModel{
+fun ListItem.toUiModel() : HomeUiModel {
     return HomeUiModel(title, imageUri, details, thumbnail, isExpanded)
 }

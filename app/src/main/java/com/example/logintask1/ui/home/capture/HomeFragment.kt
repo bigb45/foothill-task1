@@ -1,4 +1,4 @@
-package com.example.logintask1.ui.home
+package com.example.logintask1.ui.home.capture
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -23,13 +23,12 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.logintask1.R
 import com.example.logintask1.data.ListItem
 import com.example.logintask1.databinding.FragmentHomeBinding
-import com.example.logintask1.ui.home.adapters.UsersListAdapter
-import java.lang.Exception
-
+import com.example.logintask1.ui.home.capture.adapter.UsersListAdapter
 import java.util.Random
 
 
@@ -143,7 +142,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setupAdapter() {
-        myAdapter = UsersListAdapter({ item: ListItem, position: Int ->
+        myAdapter = UsersListAdapter({ item: ListItem, _: Int ->
             item.isExpanded = !item.isExpanded
             Log.d("item", item.isExpanded.toString() + " " + item.title)
 //            (cut my life into pieces) this is my last resort
@@ -158,7 +157,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
 
 
     private fun setupButtonListener() {
-
     }
 
 
@@ -180,19 +178,14 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
 
     override fun onInputConfirmed(title: String, details: String) {
         createAndAddListItemWithImage(title, details)
+        binding.constraintLayoutPlaceholder.visibility = View.GONE
     }
 
     private fun setupRecyclerView() {
 
         binding.recyclerViewUsers.apply {
-            layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
             this.adapter = myAdapter
-
-////        stops the list item from flickering when click
-//            (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
-//                false
-
         }
     }
 

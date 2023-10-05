@@ -68,4 +68,8 @@
     <string name="dialog_title">Card name</string>
     <string name="confirm">Confirm</string>
     <string name="open_camera">Open camera</string>
+    <string name="load_posts">Load Posts</string>
+    <string name="avatar_description">user avatar</string>
+    <string name="add_image_hint">Start by adding an Image</string>
+    <string name="load_posts_error">Couldn\'t retrive posts.</string>
 </resources>

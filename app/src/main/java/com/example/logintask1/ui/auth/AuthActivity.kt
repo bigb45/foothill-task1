@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 private const val PAGE_COUNT = 2
 
+
 class AuthActivity : FragmentActivity() {
     private lateinit var binding: ActivityAuthBinding
 
@@ -45,10 +46,6 @@ class AuthActivity : FragmentActivity() {
             }.attach()
 
     }
-
-
-    //TODO: you need to integrate the tab layout directly with navController
-    // use viewPager 2
 
 
     private inner class PagerAdapter(fragmentActivity: FragmentActivity) :

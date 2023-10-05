@@ -1,4 +1,4 @@
-package com.example.logintask1.ui.home
+package com.example.logintask1.ui.home.capture
 
 import android.graphics.Bitmap
 import android.net.Uri

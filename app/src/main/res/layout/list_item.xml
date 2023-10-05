@@ -7,7 +7,7 @@
     <data>
         <variable
             name="uiModel"
-            type="com.example.logintask1.ui.home.HomeUiModel" />
+            type="com.example.logintask1.ui.home.capture.HomeUiModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -2,14 +2,12 @@ package com.example.logintask1.ui.auth.signin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.logintask1.R
 import com.example.logintask1.databinding.FragmentSigninBinding
 import com.example.logintask1.ui.home.HomeActivity

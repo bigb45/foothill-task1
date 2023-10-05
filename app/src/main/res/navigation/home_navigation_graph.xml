@@ -8,6 +8,11 @@
     <fragment
         tools:layout="@layout/fragment_home"
         android:id="@+id/homeFragment"
-        android:name="com.example.logintask1.ui.home.HomeFragment"
+        android:name="com.example.logintask1.ui.home.capture.HomeFragment"
         android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/postsFragment"
+        android:name="com.example.logintask1.ui.home.userpost.PostsFragment"
+        tools:layout="@layout/fragment_posts"
+        android:label="Posts" />
 </navigation>
