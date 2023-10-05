@@ -1,6 +1,5 @@
-package com.example.logintask1.ui.home
+package com.example.logintask1.ui.home.capture
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,7 +10,6 @@ import android.os.Bundle
 import android.os.CancellationSignal
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
@@ -23,25 +21,26 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.logintask1.R
-import com.example.logintask1.data.ListItem
 import com.example.logintask1.databinding.FragmentHomeBinding
-import com.example.logintask1.ui.home.adapters.UsersListAdapter
-import java.lang.Exception
-
-import java.util.Random
+import com.example.logintask1.ui.home.capture.adapter.UsersListAdapter
+import com.example.logintask1.ui.home.capture.subfragments.FullImageDialog
+import com.example.logintask1.ui.home.capture.subfragments.TitleDialogFragment
+import com.example.logintask1.ui.home.userpost.UserPost
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
 
 
 val REQUIRED_PERMISSIONS = arrayOf(
     android.Manifest.permission.CAMERA,
 )
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var myAdapter: UsersListAdapter
-    private val viewModel: HomeViewModel by viewModels()
-    private var myList: ArrayList<ListItem>? = null
+    private val viewModel: HomeViewModel by viewModels<HomeViewModel>()
     private var capturedImageUri: Uri? = null
     private var imageThumbnail: Bitmap? = null
 
@@ -49,18 +48,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        with(binding) {
-
-//            this line single-handedly caused me 2 days of pain and suffering
-            viewModel = this@HomeFragment.viewModel
-            lifecycleOwner = this@HomeFragment
-        }
-
-
-
-        if (allPermissionsGranted()) {
-//            startCamera()
-        } else {
+        if (!allPermissionsGranted()) {
             requestPermissions()
         }
         return binding.root
@@ -68,28 +56,30 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        with(binding) {
-            openCameraToolbar.inflateMenu(R.menu.camera_toolbar_menu)
-            openCameraToolbar.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.open_camera -> {
-                        dispatchCaptureIntent()
-                        true
-                    }
+        initView()
+    }
 
-                    else -> {
-                        false
-                    }
-                }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun initView() {
+
+        with(binding) {
+            binding.floatingActionButtonOpenCamera.setOnClickListener {
+                dispatchCaptureIntent()
             }
+            (binding.recyclerViewUsers.itemAnimator as SimpleItemAnimator).supportsChangeAnimations =
+                false
+
+            viewModel = this@HomeFragment.viewModel
+            lifecycleOwner = this@HomeFragment
+
         }
         setupAdapter()
         setupRecyclerView()
-        setupButtonListener()
-        updateAdapter()
+        viewModel.personalPosts.observe(viewLifecycleOwner) {
+            myAdapter.submitList(it)
+        }
     }
-
 
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun dispatchCaptureIntent() {
@@ -98,8 +88,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
         values.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
         values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
         capturedImageUri = requireContext().contentResolver.insert(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            values
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
         )
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, capturedImageUri)
         if (cameraIntent.resolveActivity(requireActivity().packageManager) != null) {
@@ -113,9 +102,7 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     ) { result ->
         if (result.resultCode == android.app.Activity.RESULT_OK) {
             imageThumbnail = requireContext().contentResolver.loadThumbnail(
-                capturedImageUri!!,
-                Size(250, 250),
-                CancellationSignal()
+                capturedImageUri!!, Size(250, 250), CancellationSignal()
             )
 
             val customDialog = TitleDialogFragment()
@@ -131,8 +118,6 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-//        iterates over every permission in the array and checks if it has been granted
-
         ContextCompat.checkSelfPermission(
             requireContext(), it
         ) == PackageManager.PERMISSION_GRANTED
@@ -140,66 +125,58 @@ class HomeFragment : Fragment(), TitleDialogFragment.InputDialogListener {
     }
 
 
-
-    @SuppressLint("NotifyDataSetChanged")
     private fun setupAdapter() {
-        myAdapter = UsersListAdapter({ item: ListItem, position: Int ->
-            item.isExpanded = !item.isExpanded
-            Log.d("item", item.isExpanded.toString() + " " + item.title)
-//            (cut my life into pieces) this is my last resort
-            myAdapter.notifyDataSetChanged()
-
+        myAdapter = UsersListAdapter({ item ->
+            viewModel.expandCard(item)
         }, { item ->
             val imageDialogFragment = FullImageDialog.newInstance(item.imageUri!!)
             imageDialogFragment.show(childFragmentManager, "Image_dialog")
         })
     }
 
+    private fun createItem(title: String, details: String): ListItem {
+        val date = Date()
+        val myPost = UserPost(
+            postId = viewModel.getId(),
+            postTitle = title,
+            postBody = details,
+            // TODO: change this to username acquired from database
+            userName = "Mohammed Natour",
+            createDate = Date(date.time),
+            likes = 0,
+            avatarUrl = "",
+            isLiked = false,
+            isSaved = false,
+        )
+        viewModel.uploadPost(myPost)
 
-
-    private fun setupButtonListener() {
-
-    }
-
-
-
-    private fun createAndAddListItemWithImage(title: String, details: String) {
-
-        val item = ListItem(
+        return ListItem(
             imageUri = capturedImageUri,
             title = title,
             details = details,
-            id = Random().nextInt(200),
+            id = viewModel.getId(),
             thumbnail = imageThumbnail!!
         )
-        myList?.add(item)
-        myAdapter.submitList(myList)
-//        Log.d("item", myList.toString())
-        myList?.let { myAdapter.notifyItemChanged(it.size) }
+
+    }
+
+    private fun addListItemWithImage(item: ListItem) {
+
+        viewModel.addPersonalPost(item)
     }
 
     override fun onInputConfirmed(title: String, details: String) {
-        createAndAddListItemWithImage(title, details)
+        val item = createItem(title, details)
+        addListItemWithImage(item)
     }
 
     private fun setupRecyclerView() {
 
-        binding.recyclerViewUsers.apply {
-            layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            this.adapter = myAdapter
-
-////        stops the list item from flickering when click
-//            (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
-//                false
-
+        with(binding.recyclerViewUsers) {
+            adapter = myAdapter
         }
     }
 
-    private fun updateAdapter() {
-        myList = ArrayList()
-        myAdapter.submitList(myList)
-    }
 
     private val activityResultLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()

@@ -1,12 +1,10 @@
-package com.example.logintask1.ui.home
+package com.example.logintask1.ui.home.capture.subfragments
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import com.bumptech.glide.Glide
 import com.example.logintask1.R
 import com.example.logintask1.databinding.CustomAlertDialogBinding
 
@@ -22,14 +20,12 @@ class TitleDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialogBinding = CustomAlertDialogBinding.inflate(layoutInflater)
 
-        return AlertDialog.Builder(requireContext())
-            .setMessage(getString(R.string.dialog_title))
+        return AlertDialog.Builder(requireContext()).setMessage(getString(R.string.dialog_title))
             .setPositiveButton(getString(R.string.confirm)) { _, _ ->
                 confirmButtonListener()
-            }
-            .setView(dialogBinding.root)
-            .create()
+            }.setView(dialogBinding.root).create()
     }
+
     companion object {
         const val TAG = "EnterTitleDialog"
 
@@ -40,10 +36,11 @@ class TitleDialogFragment : DialogFragment() {
         show(fragmentManager, TAG)
     }
 
-    fun setInputDialogListener(listener: InputDialogListener){
+    fun setInputDialogListener(listener: InputDialogListener) {
         inputDialogListener = listener
     }
-    private fun confirmButtonListener(){
+
+    private fun confirmButtonListener() {
         val title = dialogBinding.editTextTitle.text.toString()
         val details = dialogBinding.editTextDetails.text.toString()
 

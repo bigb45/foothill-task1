@@ -1,22 +1,24 @@
 package com.example.logintask1.ui.auth.signup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.logintask1.domain.use_cases.ValidationUseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SignupViewModel : ViewModel() {
+@HiltViewModel
+class SignupViewModel @Inject constructor(private val validateUseCases: ValidationUseCases) :
+    ViewModel() {
 
-    private val _emailError = MutableLiveData<String?>()
-    private val _passwordError = MutableLiveData<String?>()
-    private val _confirmPasswordError = MutableLiveData<String?>()
+    private val _emailError = MutableLiveData<Int?>()
+    private val _passwordError = MutableLiveData<Int?>()
+    private val _confirmPasswordError = MutableLiveData<Int?>()
 
-    // data to be set in the view
-    val emailError: LiveData<String?> = _emailError
-    val passwordError: LiveData<String?> = _passwordError
-    val confirmPasswordError: LiveData<String?> = _confirmPasswordError
+    val emailError: LiveData<Int?> = _emailError
+    val passwordError: LiveData<Int?> = _passwordError
+    val confirmPasswordError: LiveData<Int?> = _confirmPasswordError
 
-    // data coming from view
     var password: MutableLiveData<String?> = MutableLiveData()
     var email: MutableLiveData<String?> = MutableLiveData()
     var confirmPassword: MutableLiveData<String?> = MutableLiveData()
@@ -28,44 +30,35 @@ class SignupViewModel : ViewModel() {
     }
 
     fun validateEmail(): Boolean {
-        val emailRegex = Regex(".+@.+(.com)$")
-        val isValid = emailRegex.matches(email.value.toString()) || email.value?.isEmpty() ?: true
-        if (!isValid) {
-            Log.d("error", "incorrect email format")
-            _emailError.value = "Incorrect email format"
-        } else {
-            Log.d("validation", emailRegex.matches(email.value.toString()).toString())
-            _emailError.value = null
-        }
-        return isValid && email.value?.isEmpty() == false
+        _emailError.value = validateUseCases.emailValidation.invoke(email.value.toString())?.message
+        return _emailError.value == null || email.value?.isEmpty() != false
     }
 
     fun validatePassword(): Boolean {
-        val isValid =
-            (password.value.toString().length in 8..12) || password.value?.isEmpty() ?: true
-        if (!isValid) {
-            _passwordError.value = "Password must be between 8 and 12 characters"
-        } else {
-            _passwordError.value = null
-        }
-        return isValid && password.value?.isEmpty() == false
+        _passwordError.value = validateUseCases.passwordValidation.invoke(password.value.toString())?.message
+        return _passwordError.value == null || password.value?.isEmpty() != false
     }
 
     fun validateConfirmPassword(): Boolean {
-        return if (confirmPassword.value.toString() != password.value.toString()) {
-            _confirmPasswordError.value = "Passwords don't match"
-            false
-        } else {
-            _confirmPasswordError.value = null
-            true
-        }
+        _confirmPasswordError.value = validateUseCases.confirmPasswordValidation(
+            confirmPassword.value.toString(),
+            password.value.toString()
+        )?.message
+
+        return _confirmPasswordError.value == null
     }
 
     fun validateFields(): Boolean {
-        val emailCondition = validateEmail()
-        val passwordCondition = validatePassword()
-        val confirmPasswordCondition = validateConfirmPassword()
-        return emailCondition && passwordCondition && confirmPasswordCondition
+        with(validateUseCases) {
+            val emailCondition = emailValidation.invoke(email.value.toString()) == null
+            val passwordCondition =
+                passwordValidation.invoke(password.value.toString()) == null
+            val confirmPasswordCondition = confirmPasswordValidation.invoke(
+                confirmPassword.value.toString(),
+                password.value.toString()
+            ) == null
+            return emailCondition && passwordCondition && confirmPasswordCondition
+        }
     }
 
 

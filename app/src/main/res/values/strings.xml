@@ -68,4 +68,12 @@
     <string name="dialog_title">Card name</string>
     <string name="confirm">Confirm</string>
     <string name="open_camera">Open camera</string>
+    <string name="load_posts">Load Posts</string>
+    <string name="avatar_description">user avatar</string>
+    <string name="add_image_hint">Start by adding an Image</string>
+    <string name="load_posts_error">Couldn\'t retrive posts.</string>
+    <string name="wrong_email_pattern_error">Please enter a correct email</string>
+    <string name="empty_email_error">Email cannot be empty</string>
+    <string name="no_match">Passwords do not match</string>
+    <string name="password_length_error">Password must be between 8 and 12 characters</string>
 </resources>
